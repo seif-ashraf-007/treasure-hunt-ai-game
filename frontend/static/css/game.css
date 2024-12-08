@@ -1,0 +1,143 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F1F4F9;
+    color: #333;
+    padding: 20px;
+}
+
+/* Header */
+h1 {
+    text-align: center;
+    color: #080808;
+    margin-bottom: 20px;
+}
+
+/* Game Info Section */
+#game-info {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#game-info p {
+    font-size: 18px;
+    margin: 5px 0;
+}
+
+/* Game Controls */
+#game-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#game-controls button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #70B7FF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px;
+}
+
+#game-controls button:hover {
+    background-color: #080808;
+    transition: background-color 0.3s;
+}
+
+/* Map Board */
+#game-board {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-row {
+    display: flex;
+    /* gap: 5px; */
+}
+
+.game-cell {
+    background-image: url('../assets/grass.jpg');
+    background-size: contain;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Cell types */
+.game-cell.empty {
+    background-color: #f9f9f9;
+}
+
+.game-cell.wall {
+    background-image: none;
+    background-color: #333;
+}
+
+.game-cell.water {
+    background-image: url('https://img.freepik.com/vecteurs-premium/vagues-eau-pixel-art-motif-sans-couture-texture-surface-mer-ocean-sprite-8-bits_418367-233.jpg?w=1380');
+}
+
+.game-cell.rock {
+    background-image: url('../assets/rock.png'), url('../assets/grass.jpg');
+    
+}
+
+.game-cell.forest {
+    background-image: url('../assets/trees-and-bushes.png'), url('../assets/grass.jpg');    background-color: #2E8B57;
+}
+
+.game-cell.path {
+    position: relative;
+}
+
+.game-cell.path::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #FFD700;
+    border-radius: 50%;
+    animation: pathAnimation 1s ease-in-out forwards;
+}
+
+@keyframes pathAnimation {
+    0% {
+        transform: scale(0);
+        background-color: white;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        background-color: yellow;
+    }
+}
+
+/* Analytics */
+#game-analytics {
+    text-align: center;
+    background-color: #080808;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+}
+
+#game-analytics p {
+    font-size: 16px;
+    margin: 10px 0;
+}

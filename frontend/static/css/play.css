@@ -1,0 +1,125 @@
+/* Reusing the existing color scheme and layout */
+@import url('https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Eater&family=Lakki+Reddy&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+/* Header Styles */
+header {
+    background-color: #F5DEB3; /* Wheat */
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #D2691E;
+}
+
+header h1 {
+    margin: 0;
+    font-family: "Lakki Reddy", serif;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    font-size: 1.4rem;
+    transition: all 0.3s;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #D2691E;
+    transition: all 0.1s;
+}
+
+nav ul li a:hover {
+    color: #8B4513;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+}
+
+/* Hero Section Styles */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f5deb3;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.hero-content {
+    flex: 1;
+    padding-right: 40px;
+    text-align: center;
+}
+
+.hero-content h2 {
+    font-family: "Eater", serif;
+    font-size: 2.5rem;
+    color: #D2691E;
+}
+
+.hero-content p {
+    font-size: 1.4rem;
+    color: #8B4513;
+    max-width: 80%;
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.selection {
+    margin: 20px 0;
+    font-size: 1.2rem;
+}
+
+.selection label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+select {
+    padding: 8px 12px;
+    font-size: 1rem;
+    margin-left: 10px;
+    background-color: #fff3e6;
+    border: 1px solid #d2691e;
+    border-radius: 5px;
+    color: #333;
+}
+
+button {
+    background-color: #D2691E;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-family: "Lakki Reddy", serif;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: #8B4513;
+}

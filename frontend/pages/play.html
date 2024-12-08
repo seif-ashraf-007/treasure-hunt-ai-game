@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play Game</title>
+  <link rel="stylesheet" href="../static/css/play.css"> <!-- Your custom CSS -->
+</head>
+<body>
+  <header>
+    <h1>The Treasure Hunt AI</h1>
+    <nav>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="play.html">Play</a></li>
+        <li><a href="maps.html">Maps</a></li>
+        <li><a href="create-map.html">Create Map</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Select Your Map and Pathfinding Algorithm</h2>
+        <p>Choose a map and a pathfinding algorithm to begin your treasure hunt adventure!</p>
+      </div>
+    </section>
+
+    <!-- Map Selection Dropdown -->
+    <div class="selection">
+      <label for="mapSelect">Select Map:</label>
+      <select id="mapSelect">
+        <option value="">--Choose a Map--</option>
+        <!-- Maps will be populated here dynamically from backend -->
+      </select>
+    </div>
+
+    <!-- Algorithm Selection Dropdown -->
+    <div class="selection">
+      <label for="algorithmSelect">Select Algorithm:</label>
+      <select id="algorithmSelect">
+        <option value="">--Choose an Algorithm--</option>
+        <option value="A*">A*</option>
+        <option value="Greedy Best-First Search">Greedy Best-First Search</option>
+        <option value="Weighted A*">Weighted A*</option>
+        <option value="Dijkstra">Dijkstra</option>
+        <!-- Add other algorithms here -->
+      </select>
+    </div>
+
+    <button id="startGameBtn" class="btn">Start Game</button>
+  </main>
+
+  <script src="../static/js/play.js"></script> <!-- JS File -->
+</body>
+</html>

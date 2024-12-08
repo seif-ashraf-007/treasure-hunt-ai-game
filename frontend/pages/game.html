@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasure Hunt AI Game</title>
+    <link rel="stylesheet" href="../static/css/game.css">
+</head>
+<body>
+    <header>
+        <h1>Treasure Hunt AI Game</h1>
+    </header>
+    <main>
+        <div class="game-info">
+            <p><strong>Map:</strong> <span id="map-name"></span></p>
+            <p><strong>Algorithm:</strong> <span id="algorithm-name"></span></p>
+        </div>
+
+        <div id="game-board" class="game-board">
+            <!-- The game grid will be rendered here -->
+        </div>
+
+        <button id="startGameBtn">Start Game</button>
+        <button id="resetGameBtn">Reset Game</button>
+
+        <div id="game-analytics" style="display: none;">
+            <h3>Game Analytics</h3>
+            <p><strong>Status:</strong> <span id="game-status"></span></p>
+            <p><strong>Time Taken:</strong> <span id="game-time"></span></p>
+            <p><strong>Path Length:</strong> <span id="path-length"></span></p>
+        </div>
+    </main>
+
+    <script src="../static/js/game.js"></script>
+</body>
+</html>

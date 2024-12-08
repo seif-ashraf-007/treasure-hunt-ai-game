@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Eater&family=Lakki+Reddy&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+
+
+/* Header Styles */
+header {
+    background-color: #F5DEB3; /* Wheat */
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #D2691E;
+}
+
+header h1 {
+    margin: 0;
+    font-family: "Lakki Reddy", serif;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    font-size: 1.4rem;
+    transition: all 0.3s;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #D2691E;
+    transition: all 0.1S;
+}
+
+nav ul li a:hover {
+    color: #8B4513;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Hero Section Styles */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.hero-content {
+    flex: 1;
+    padding-right: 40px;
+}
+
+.hero-content h2 {
+    font-family: "Eater", serif;
+    font-size: 3rem;
+    max-width: 70%;
+}
+
+.hero-content p {
+    font-size: 1.4rem;
+    max-width: 60%;
+}
+
+.btn {
+    text-decoration: none;
+    display: inline-block;
+    background-color: #D2691E;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    font-family: "Lakki Reddy", serif;
+}
+
+.btn:hover {
+    background-color: #8B4513;
+}
+
+.hero-image img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover; /* Ensures the image covers the space without distortion */
+    max-height: 400px; /* Adjust the height limit to fit the design */
+}
