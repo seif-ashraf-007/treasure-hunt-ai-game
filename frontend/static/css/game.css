@@ -1,3 +1,7 @@
+/* Add these imports at the top */
+@import url('https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Eater&family=Lakki+Reddy&display=swap');
+
 /* General Reset */
 * {
     margin: 0;
@@ -6,68 +10,188 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #F1F4F9;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
     color: #333;
-    padding: 20px;
+    background-color: #f8f8f8;
 }
 
 /* Header */
+header {
+    background-color: #F5DEB3;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #D2691E;
+}
+
 h1 {
-    text-align: center;
-    color: #080808;
-    margin-bottom: 20px;
+    margin: 0;
+    font-family: "Lakki Reddy", serif;
+    color: #D2691E;
 }
 
 /* Game Info Section */
-#game-info {
-    text-align: center;
+.game-info {
+    background-color: #f5deb3;
+    padding: 20px;
     margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
 }
 
-#game-info p {
-    font-size: 18px;
-    margin: 5px 0;
+.game-info p {
+    font-size: 1.4rem;
+    color: #8B4513;
+    margin: 10px 0;
 }
 
 /* Game Controls */
-#game-controls {
-    text-align: center;
-    margin-bottom: 20px;
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
 }
 
-#game-controls button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #70B7FF;
+button {
+    background-color: #D2691E;
     color: white;
-    border: none;
+    padding: 12px 24px;
+    font-size: 1.2rem;
     border-radius: 5px;
-    margin: 0 10px;
+    cursor: pointer;
+    margin: 10px;
+    font-family: "Lakki Reddy", serif;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    border: none;
 }
 
-#game-controls button:hover {
-    background-color: #080808;
-    transition: background-color 0.3s;
+button:hover {
+    background-color: #8B4513;
 }
 
-/* Map Board */
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Game Container */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Analytics Section */
+.game-analytics {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+    background-color: #f5deb3;
+    color: #8B4513;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.analytics-content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.analytics-section {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.analytics-section p {
+    margin: 10px 0;
+    font-size: 0.9rem;
+}
+
+.path-details {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.path-details h4 {
+    color: #D2691E;
+    margin-bottom: 15px;
+    font-family: "Eater", serif;
+    text-align: center;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 10px 0;
+}
+
+#path-costs-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+#path-costs-table th,
+#path-costs-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #D2691E;
+}
+
+#path-costs-table th {
+    background-color: #D2691E;
+    color: white;
+    font-family: "Lakki Reddy", serif;
+    font-size: 0.85rem;
+}
+
+#path-costs-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+#path-costs-table tr:hover {
+    background-color: rgba(210, 105, 30, 0.1);
+}
+
+.total-cost {
+    margin-top: 15px;
+    text-align: right;
+    font-weight: bold;
+    padding-right: 10px;
+}
+
+.game-with-analytics {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+}
+
+/* Game Board */
 #game-board {
     max-width: 600px;
     margin: 0 auto;
-    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
 }
 
 .game-row {
     display: flex;
-    /* gap: 5px; */
 }
 
+/* Keep existing game cell styles */
 .game-cell {
-    background-image: url('../assets/grass.jpg');
+    background-image: url('../assets/grass2.png');
     background-size: contain;
     width: 64px;
     height: 64px;
@@ -87,16 +211,20 @@ h1 {
 }
 
 .game-cell.water {
-    background-image: url('https://img.freepik.com/vecteurs-premium/vagues-eau-pixel-art-motif-sans-couture-texture-surface-mer-ocean-sprite-8-bits_418367-233.jpg?w=1380');
+    background-image: url('../assets/water.png');
 }
 
 .game-cell.rock {
-    background-image: url('../assets/rock.png'), url('../assets/grass.jpg');
+    background-image: url('../assets/rocks.png'), url('../assets/grass2.png');
+    background-repeat: no-repeat;
+    background-position: center;
     
 }
 
 .game-cell.forest {
-    background-image: url('../assets/trees-and-bushes.png'), url('../assets/grass.jpg');    background-color: #2E8B57;
+    background-image: url('../assets/tree.png'), url('../assets/grass2.png');    
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .game-cell.path {
@@ -125,19 +253,4 @@ h1 {
         transform: scale(1);
         background-color: yellow;
     }
-}
-
-/* Analytics */
-#game-analytics {
-    text-align: center;
-    background-color: #080808;
-    color: white;
-    padding: 20px;
-    border-radius: 10px;
-    display: none;
-}
-
-#game-analytics p {
-    font-size: 16px;
-    margin: 10px 0;
 }

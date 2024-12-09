@@ -10,24 +10,58 @@
     <header>
         <h1>Treasure Hunt AI Game</h1>
     </header>
+    
     <main>
-        <div class="game-info">
-            <p><strong>Map:</strong> <span id="map-name"></span></p>
-            <p><strong>Algorithm:</strong> <span id="algorithm-name"></span></p>
-        </div>
+        <div class="game-container">
+            <div class="game-info">
+                <p><strong>Map:</strong> <span id="map-name"></span></p>
+                <p><strong>Algorithm:</strong> <span id="algorithm-name"></span></p>
+            </div>
 
-        <div id="game-board" class="game-board">
-            <!-- The game grid will be rendered here -->
-        </div>
-
-        <button id="startGameBtn">Start Game</button>
-        <button id="resetGameBtn">Reset Game</button>
-
-        <div id="game-analytics" style="display: none;">
-            <h3>Game Analytics</h3>
-            <p><strong>Status:</strong> <span id="game-status"></span></p>
-            <p><strong>Time Taken:</strong> <span id="game-time"></span></p>
-            <p><strong>Path Length:</strong> <span id="path-length"></span></p>
+            <div class="game-with-analytics">
+                <div class="map">
+                    <div id="game-board" class="game-board">
+                        <!-- The game grid will be rendered here -->
+                    </div>
+        
+                    <div class="button-container">
+                        <button id="startGameBtn">Start Game</button>
+                        <button id="resetGameBtn">Reset Game</button>
+                    </div>
+                </div>
+    
+                <div id="game-analytics" class="game-analytics" style="display: none;">
+                    <h3>Game Analytics</h3>
+                    <div class="analytics-content">
+                        <div class="analytics-section">
+                            <p><strong>Status:</strong> <span id="game-status"></span></p>
+                            <p><strong>Algorithm Processing Time:</strong> <span id="game-time"></span></p>
+                            <p><strong>Total Time Since Start:</strong> <span id="real-time"></span></p>
+                            <p><strong>Current Path Cost:</strong> <span id="path-length">0</span></p>
+                        </div>
+                        
+                        <div class="path-details">
+                            <h4>Path Details</h4>
+                            <div class="table-container">
+                                <table id="path-costs-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Terrain</th>
+                                            <th>Count</th>
+                                            <th>Cost</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Will be populated dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <p class="total-cost"><strong>Total Path Cost:</strong> <span id="total-path-cost">0</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
