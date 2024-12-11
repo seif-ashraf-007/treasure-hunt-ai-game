@@ -116,13 +116,25 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('path-length').textContent = totalCost;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     function animatePath(path, explored, mapData) {
         return new Promise((resolve) => {
             // Reset calculations
             currentPathCost = 0;
             terrainCounts = {};
             
-            // Ensure explored is an array
+            // // Ensure explored is an array
             explored = explored || [];
             
             if (!path || path.length === 0) {
@@ -186,6 +198,84 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+
+
+
+
+
+
+
+
+
+
+    function animateUnavailablePath(path, explored, mapData) {
+        return new Promise((resolve) => {
+            // Ensure explored is an array
+            explored = explored || [];
+    
+            // Start the agent trying to explore impassable paths
+            let retries = 0;
+            const maxRetries = 10; // Limit retries to avoid infinite loops
+    
+            // Function to try and explore paths
+            function tryExploringPaths() {
+                retries++;
+                let foundValidPath = false;
+    
+                // Check for all paths the agent can try
+                explored.forEach((position, index) => {
+                    const [row, col] = position;
+                    const terrainValue = mapData.grid[row][col];
+                    const terrainType = mapData.legend[terrainValue];
+                    const stepCost = mapData.costs[terrainType];
+    
+                    // If the cost is impassable or too high, mark it as red
+                    if (stepCost === -1 || stepCost > 5) { // high cost or impassable terrains
+                        const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
+                        if (cell && !cell.classList.contains('start') && !cell.classList.contains('goal')) {
+                            cell.classList.add('unavailable'); // Mark the cell in red
+                        }
+                    } else {
+                        // If it's a valid path, mark it green and stop retries
+                        const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
+                        if (cell && !cell.classList.contains('start') && !cell.classList.contains('goal')) {
+                            cell.classList.add('path'); // Mark the cell as part of the path
+                            foundValidPath = true;
+                        }
+                    }
+                });
+    
+                // If valid path found, resolve
+                if (foundValidPath) {
+                    resolve();
+                } else if (retries < maxRetries) {
+                    // Retry again after a short delay
+                    setTimeout(() => {
+                        tryExploringPaths(); // Recursive retry
+                    }, 1000);
+                } else {
+                    // If max retries exceeded, stop searching
+                    document.getElementById('game-status').textContent = 'No valid path found after multiple attempts!';
+                    resolve();
+                }
+            }
+    
+            // Start the exploration process
+            tryExploringPaths();
+        });
+    }
+    
+    
+
+
+
+
+    
+
+
+
+
+    
     function startGame() {
         startTime = Date.now();
         realStartTime = performance.now();

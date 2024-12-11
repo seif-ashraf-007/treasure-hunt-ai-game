@@ -50,3 +50,4 @@ def iterative_deepening_a_star_algorithm(map_data):
         if t == float('inf'):
             return {"error": "No path found", "explored": explored}
         bound = t 
+
