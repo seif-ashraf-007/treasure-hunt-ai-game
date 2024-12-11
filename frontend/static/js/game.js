@@ -44,11 +44,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 if (rowIndex === data.mapData.start[0] && colIndex === data.mapData.start[1]) {
                     cellDiv.classList.add('start');
-                    cellDiv.innerHTML = '🏃';
+                    cellDiv.innerHTML = 'A';
+                    cellDiv.style.fontSize = '2rem';
+                    cellDiv.style.color = 'red';
                 }
                 if (rowIndex === data.mapData.goal[0] && colIndex === data.mapData.goal[1]) {
                     cellDiv.classList.add('goal');
-                    cellDiv.innerHTML = '🏆';
+                    cellDiv.innerHTML = 'B';
+                    cellDiv.style.fontSize = '2rem';
+                    cellDiv.style.color = 'blue';
                 }
                 
                 rowDiv.appendChild(cellDiv);
@@ -82,6 +86,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updatePathCostsTable(terrain, cost) {
+        // Reset counts if this is the first update
+        if (Object.keys(terrainCounts).length === 0) {
+            terrainCounts = {};
+            document.getElementById('total-path-cost').textContent = '0';
+            document.getElementById('path-length').textContent = '0';
+            const tbody = document.getElementById('path-costs-table').getElementsByTagName('tbody')[0];
+            tbody.innerHTML = '';
+        }
+
         terrainCounts[terrain] = terrainCounts[terrain] || { count: 0, cost: cost };
         terrainCounts[terrain].count++;
         
@@ -99,15 +112,18 @@ document.addEventListener("DOMContentLoaded", function () {
             row.insertCell(3).textContent = terrainTotalCost;
             totalCost += terrainTotalCost;
         }
-        
         document.getElementById('total-path-cost').textContent = totalCost;
         document.getElementById('path-length').textContent = totalCost;
     }
 
-    function animatePath(path, mapData) {
+    function animatePath(path, explored, mapData) {
         return new Promise((resolve) => {
+            // Reset calculations
             currentPathCost = 0;
             terrainCounts = {};
+            
+            // Ensure explored is an array
+            explored = explored || [];
             
             if (!path || path.length === 0) {
                 document.getElementById('game-status').textContent = 'No Path Found! Dead End';
@@ -131,26 +147,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            path.forEach((position, index) => {
+            // Start animations immediately
+            // First, animate explored paths in red
+            explored.forEach((position, index) => {
                 setTimeout(() => {
                     const [row, col] = position;
                     const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
-                    if (cell) {
-                        cell.classList.add('path');
-                        
-                        const terrainValue = mapData.grid[row][col];
-                        const terrainType = mapData.legend[terrainValue];
-                        const stepCost = mapData.costs[terrainType];
-                        
-                        updatePathCostsTable(terrainType, stepCost);
+                    if (cell && !cell.classList.contains('start') && !cell.classList.contains('goal')) {
+                        cell.classList.add('explored');
                     }
-                    
-                    if (index === path.length - 1) {
-                        clearInterval(timerInterval);
-                        resolve();
-                    }
-                }, index * 500);
+                }, index * 100); // Delay for better visibility
             });
+
+            // Then, animate the final path in green
+            setTimeout(() => {
+                path.forEach((position, index) => {
+                    setTimeout(() => {
+                        const [row, col] = position;
+                        const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
+                        if (cell) {
+                            cell.classList.remove('explored');
+                            cell.classList.add('path');
+                            
+                            const terrainValue = mapData.grid[row][col];
+                            const terrainType = mapData.legend[terrainValue];
+                            const stepCost = mapData.costs[terrainType];
+                            
+                            updatePathCostsTable(terrainType, stepCost);
+                        }
+                        
+                        if (index === path.length - 1) {
+                            clearInterval(timerInterval);
+                            resolve();
+                        }
+                    }, index * 200); // Delay for better visibility
+                });
+            }, explored.length * 100); // Delay based on explored animation
         });
     }
 
@@ -160,6 +192,14 @@ document.addEventListener("DOMContentLoaded", function () {
         
         startGameBtn.textContent = 'Solving...';
         startGameBtn.disabled = true;
+
+        // Reset any existing animations and calculations
+        const cells = document.querySelectorAll('.game-cell');
+        cells.forEach(cell => {
+            cell.classList.remove('path', 'explored');
+        });
+        terrainCounts = {};
+        currentPathCost = 0;
 
         // Show analytics immediately
         document.getElementById('game-analytics').style.display = 'block';
@@ -183,34 +223,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     startGameBtn.disabled = false;
                     clearInterval(timerInterval);
                     return;
-                }
-
-                // Update status based on whether a path was found
-                if (!data.path || data.path.length === 0) {
-                    document.getElementById('game-status').textContent = 'Analyzing... No Valid Path Found!';
-                    document.getElementById('path-length').textContent = '0';
-                    
-                    // Add some analytics even when no path is found
-                    const tbody = document.querySelector('#path-costs-table tbody');
-                    tbody.innerHTML = `
-                        <tr>
-                            <td colspan="4" style="text-align: center; color: #D2691E;">
-                                No path could be found from start to goal.
-                                <br>
-                                The algorithm explored all possible routes but encountered dead ends.
-                            </td>
-                        </tr>
-                    `;
-                    
-                    document.getElementById('total-path-cost').textContent = '0';
                 } else {
                     document.getElementById('game-status').textContent = 'Path Found! Animating...';
-                    await animatePath(data.path, data.mapData);
+                    await animatePath(data.path, data.explored, data.mapData);
                     document.getElementById('game-status').textContent = 'Solved!';
                 }
-                
+
                 startGameBtn.textContent = 'Start Game';
-                startGameBtn.disabled = true;
+                startGameBtn.disabled = false;
             })
             .catch(error => {
                 console.error("Error starting game:", error);

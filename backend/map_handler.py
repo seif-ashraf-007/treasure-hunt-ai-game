@@ -40,14 +40,25 @@ def run_algorithm(map_data, algorithm_name):
     goal = map_data['goal']
     
     # Running the selected algorithm
-    if algorithm_name == "A*":
-        from algorithms.a_star import a_star_algorithm
-        return a_star_algorithm(map_data)
-    elif algorithm_name == "Greedy Best-First Search":
-        from algorithms.greedy_best_first import greedy_best_first_algorithm
-        return greedy_best_first_algorithm(map_data)
-    elif algorithm_name == "Dijkstra":
-        from algorithms.dijkstra import dijkstra_algorithm
-        return dijkstra_algorithm(map_data)
-    else:
+    algorithms = {
+        "A*": "a_star",
+        "Greedy Best-First Search": "greedy_best_first",
+        "Dijkstra": "dijkstra",
+        "Weighted A*": "weighted_a_star",
+        "Depth-First Search": "depth_first_search",
+        "Dynamic Weighted A*": "dynamic_weighted_a_star",
+        "Iterative Deepening A*": "iterative_deepening_a_star",
+        "Bidirectional A*": "bidirectional_a_star",
+        "Probabilistic Roadmap": "prm",
+        "Best-First Search": "best_first_search"
+    }
+    
+    if algorithm_name not in algorithms:
         return {"error": "Algorithm not recognized"}
+        
+    try:
+        module = __import__(f"algorithms.{algorithms[algorithm_name]}", fromlist=["*"])
+        algorithm_function = getattr(module, f"{algorithms[algorithm_name]}_algorithm")
+        return algorithm_function(map_data)
+    except Exception as e:
+        return {"error": f"Error running algorithm: {str(e)}"}
