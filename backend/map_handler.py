@@ -1,6 +1,14 @@
 import json
 import os
 from flask import jsonify
+from algorithms.dijkstra import dijkstra_algorithm
+from algorithms.hill_climbing import hill_climbing_algorithm
+from algorithms.deepening_astar import deepening_astar_algorithm
+from algorithms.dfs import dfs_algorithm
+from algorithms.greedy_best_first import greedy_best_first_algorithm
+from algorithms.astar import astar_algorithm
+from algorithms.dynamic_weighted_astar import dynamic_weighted_astar_algorithm
+from algorithms.best_first import best_first_algorithm
 
 MAPS_DIRECTORY = './maps'
 
@@ -13,7 +21,6 @@ def load_map(map_name):
         
         with open(map_file_path) as f:
             map_data = json.load(f)
-            print(f"Loaded map: {map_data}")  # Log the full map data
         
         # Ensure the structure is correct
         if 'mapData' not in map_data:
@@ -26,39 +33,28 @@ def load_map(map_name):
 
 # Function to run the selected algorithm
 def run_algorithm(map_data, algorithm_name):
-    print(f"Map data received in run_algorithm: {map_data}")
-    
     if not map_data or not isinstance(map_data, dict):
-        return {"error": "Map data is missing or invalid - RUN"}
+        return {"error": "Map data is missing or invalid"}
     
-    # Check if all required data is present
     required_fields = ['start', 'goal', 'grid', 'legend', 'costs']
     if not all(field in map_data for field in required_fields):
         return {"error": "Missing required map data fields"}
     
-    start = map_data['start']
-    goal = map_data['goal']
-    
-    # Running the selected algorithm
     algorithms = {
-        "A*": "a_star",
-        "Greedy Best-First Search": "greedy_best_first",
-        "Dijkstra": "dijkstra",
-        "Weighted A*": "weighted_a_star",
-        "Depth-First Search": "depth_first_search",
-        "Dynamic Weighted A*": "dynamic_weighted_a_star",
-        "Iterative Deepening A*": "iterative_deepening_a_star",
-        "Bidirectional A*": "bidirectional_a_star",
-        "Probabilistic Roadmap": "prm",
-        "Best-First Search": "best_first_search"
+        'dijkstra': dijkstra_algorithm,
+        'hill_climbing': hill_climbing_algorithm,
+        'deepening_astar': deepening_astar_algorithm,
+        'dfs': dfs_algorithm,
+        'greedy_best_first': greedy_best_first_algorithm,
+        'astar': astar_algorithm,
+        'dynamic_weighted_astar': dynamic_weighted_astar_algorithm,
+        'best_first': best_first_algorithm
     }
     
     if algorithm_name not in algorithms:
         return {"error": "Algorithm not recognized"}
         
     try:
-        module = __import__(f"algorithms.{algorithms[algorithm_name]}", fromlist=["*"])
-        algorithm_function = getattr(module, f"{algorithms[algorithm_name]}_algorithm")
-        return algorithm_function(map_data)
+        return algorithms[algorithm_name](map_data)
     except Exception as e:
         return {"error": f"Error running algorithm: {str(e)}"}

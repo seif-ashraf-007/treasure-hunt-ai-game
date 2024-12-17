@@ -19,6 +19,12 @@
             </div>
 
             <div class="game-with-analytics">
+                <div class="agent-chat">
+                    <div class="chat-box" id="agent-chat-box">
+                        <!-- Chat messages will appear here -->
+                    </div>
+                </div>
+
                 <div class="map">
                     <div id="game-board" class="game-board">
                         <!-- The game grid will be rendered here -->
@@ -37,7 +43,8 @@
                             <p><strong>Status:</strong> <span id="game-status"></span></p>
                             <p><strong>Algorithm Processing Time:</strong> <span id="game-time"></span></p>
                             <p><strong>Total Time Since Start:</strong> <span id="real-time"></span></p>
-                            <p><strong>Current Path Cost:</strong> <span id="path-length">0</span></p>
+                            <p><strong>Explored Path Cost:</strong> <span id="explored-path-cost">0</span></p>
+                            <p><strong>Optimal Path Cost:</strong> <span id="path-length">0</span></p>
                         </div>
                         
                         <div class="path-details">
@@ -57,7 +64,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <p class="total-cost"><strong>Total Path Cost:</strong> <span id="total-path-cost">0</span></p>
+                            <p class="total-cost"><strong>Optimal Path Cost:</strong> <span id="total-path-cost">0</span></p>
                         </div>
                     </div>
                 </div>

@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let timerInterval;
     let currentPathCost = 0;
     let terrainCounts = {};
+    let agent = null;
+    let exploredPathCost = 0;
+    let optimalPathCost = 0;
 
     // Get query parameters from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -116,77 +119,165 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('path-length').textContent = totalCost;
     }
 
-    function animatePath(path, explored, mapData) {
-        return new Promise((resolve) => {
-            // Reset calculations
-            currentPathCost = 0;
-            terrainCounts = {};
-            
-            // Ensure explored is an array
-            explored = explored || [];
-            
-            if (!path || path.length === 0) {
-                document.getElementById('game-status').textContent = 'No Path Found! Dead End';
-                document.getElementById('path-length').textContent = '0';
-                
-                // Add some analytics even when no path is found
-                const tbody = document.querySelector('#path-costs-table tbody');
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="4" style="text-align: center; color: #D2691E;">
-                            No path could be found from start to goal.
-                            <br>
-                            The algorithm explored all possible routes but encountered dead ends.
-                        </td>
-                    </tr>
-                `;
-                
-                document.getElementById('total-path-cost').textContent = '0';
-                clearInterval(timerInterval);
-                resolve();
-                return;
-            }
+    function createAgent(startPosition) {
+        const agentElement = document.createElement('div');
+        agentElement.classList.add('agent');
+        agentElement.innerHTML = '🤖';
+        agentElement.style.position = 'absolute';
+        
+        const startCell = document.querySelector(`.game-cell[data-row='${startPosition[0]}'][data-col='${startPosition[1]}']`);
+        const rect = startCell.getBoundingClientRect();
+        
+        agentElement.style.left = `${rect.left}px`;
+        agentElement.style.top = `${rect.top}px`;
+        
+        document.body.appendChild(agentElement);
+        return agentElement;
+    }
 
-            // Start animations immediately
-            // First, animate explored paths in red
-            explored.forEach((position, index) => {
-                setTimeout(() => {
-                    const [row, col] = position;
-                    const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
-                    if (cell && !cell.classList.contains('start') && !cell.classList.contains('goal')) {
-                        cell.classList.add('explored');
-                    }
-                }, index * 100); // Delay for better visibility
-            });
-
-            // Then, animate the final path in green
-            setTimeout(() => {
-                path.forEach((position, index) => {
-                    setTimeout(() => {
-                        const [row, col] = position;
-                        const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
-                        if (cell) {
-                            cell.classList.remove('explored');
-                            cell.classList.add('path');
-                            
-                            const terrainValue = mapData.grid[row][col];
-                            const terrainType = mapData.legend[terrainValue];
-                            const stepCost = mapData.costs[terrainType];
-                            
-                            updatePathCostsTable(terrainType, stepCost);
-                        }
-                        
-                        if (index === path.length - 1) {
-                            clearInterval(timerInterval);
-                            resolve();
-                        }
-                    }, index * 200); // Delay for better visibility
-                });
-            }, explored.length * 100); // Delay based on explored animation
+    function moveAgent(agent, fromPos, toPos) {
+        return new Promise(resolve => {
+            const toCell = document.querySelector(`.game-cell[data-row='${toPos[0]}'][data-col='${toPos[1]}']`);
+            const rect = toCell.getBoundingClientRect();
+            
+            agent.style.left = `${rect.left}px`;
+            agent.style.top = `${rect.top}px`;
+            
+            setTimeout(resolve, 300); // Match transition duration
         });
     }
 
+    function addAgentMessage(message, type = 'thinking') {
+        const chatBox = document.getElementById('agent-chat-box');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', `agent-${type}`);
+        messageDiv.textContent = message;
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    async function animatePath(path, explored, mapData) {
+        // Reset calculations
+        currentPathCost = 0;
+        terrainCounts = {};
+        exploredPathCost = 0;
+        optimalPathCost = 0;
+        
+        // Ensure explored is an array
+        explored = explored || [];
+        
+        if (!path || path.length === 0) {
+            addAgentMessage("I've analyzed all possible routes, but I can't find a valid path to the goal. 😕", "action");
+            clearInterval(timerInterval);
+            return;
+        }
+
+        if (!agent) {
+            agent = createAgent(mapData.start);
+            const greetings = [
+                "Hello! I'm your pathfinding robot! Let's find that treasure! 🗺️",
+                "Beep boop! Time to hunt for treasure! 🤖",
+                "Adventure awaits! Let me guide you to the treasure! ✨",
+                "Systems online! Target: Treasure. Mission: Find the optimal path! 🎯"
+            ];
+            addAgentMessage(greetings[Math.floor(Math.random() * greetings.length)], "action");
+        }
+
+        // Exploring phase
+        for (const pos of explored) {
+            const [row, col] = pos;
+            const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
+            
+            if (cell && !cell.classList.contains('start') && !cell.classList.contains('goal')) {
+                const terrainValue = mapData.grid[row][col];
+                const terrainType = mapData.legend[terrainValue];
+                const stepCost = mapData.costs[terrainType];
+                
+                // Update explored path cost
+                exploredPathCost += stepCost;
+                document.getElementById('explored-path-cost').textContent = exploredPathCost;
+
+                const messages = {
+                    water: [
+                        `Splash! This ${terrainType} will slow us down... Cost: ${stepCost} 💧`,
+                        `Water ahead! My circuits don't like this... Cost: ${stepCost} 🌊`,
+                        `Need to be careful with water... Energy cost: ${stepCost} 🚣`
+                    ],
+                    forest: [
+                        `Dense forest here! Might need to find another way... Cost: ${stepCost} 🌳`,
+                        `These trees are making it tricky! Energy cost: ${stepCost} 🌲`,
+                        `Forest terrain detected! Navigation cost: ${stepCost} 🍃`
+                    ],
+                    rock: [
+                        `Rocky terrain ahead! This'll be tough... Cost: ${stepCost} 🪨`,
+                        `These rocks are not making it easy! Cost: ${stepCost} ⛰️`,
+                        `Climbing over rocks... Energy required: ${stepCost} 🏔️`
+                    ],
+                    empty: [
+                        `Clear path here! Nice and easy with cost ${stepCost} ✨`,
+                        `Smooth terrain ahead! Energy cost: ${stepCost} 🌟`,
+                        `This looks promising! Cost: ${stepCost} ⭐`
+                    ]
+                };
+
+                const terrainMessages = messages[terrainType] || [`Analyzing ${terrainType} terrain... Cost: ${stepCost}`];
+                addAgentMessage(terrainMessages[Math.floor(Math.random() * terrainMessages.length)]);
+                
+                await moveAgent(agent, [row, col], [row, col]);
+                cell.classList.add('explored');
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
+        }
+
+        // Stop the timer after exploration phase
+        clearInterval(timerInterval);
+
+        // Found path phase
+        addAgentMessage(`Exploration complete! Total cost of exploration: ${exploredPathCost}. Now following the optimal path! 🎯`, "action");
+        
+        // Follow the optimal path
+        for (let i = 0; i < path.length; i++) {
+            const pos = path[i];
+            const [row, col] = pos;
+            const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
+            
+            if (cell) {
+                const terrainValue = mapData.grid[row][col];
+                const terrainType = mapData.legend[terrainValue];
+                const stepCost = mapData.costs[terrainType];
+                
+                optimalPathCost += stepCost;
+                document.getElementById('path-length').textContent = optimalPathCost;
+                
+                cell.classList.remove('explored');
+                cell.classList.add('path');
+                
+                if (i === path.length - 1) {
+                    await moveAgent(agent, [row, col], mapData.goal);
+                } else {
+                    await moveAgent(agent, [row, col], [row, col]);
+                }
+                
+                updatePathCostsTable(terrainType, stepCost);
+                await new Promise(resolve => setTimeout(resolve, 300));
+            }
+        }
+
+        const successMessages = [
+            `Mission accomplished! 🎉 Explored cost: ${exploredPathCost}, Optimal path cost: ${optimalPathCost}!`,
+            `Beep boop! Found the treasure! 🌟 We explored paths costing ${exploredPathCost} to find a path costing ${optimalPathCost}!`,
+            `Target reached! 💪 Total exploration: ${exploredPathCost}, Best path: ${optimalPathCost}!`,
+            `Success! 🏆 Explored ${exploredPathCost} worth of paths to find the optimal ${optimalPathCost} path!`,
+            `Treasure located! 🎯 Exploration cost: ${exploredPathCost}, Final path cost: ${optimalPathCost}!`
+        ];
+        addAgentMessage(successMessages[Math.floor(Math.random() * successMessages.length)], "action");
+    }
+
     function startGame() {
+        // Show the chat box with animation
+        const chatBox = document.querySelector('.agent-chat');
+        chatBox.style.display = 'block';
+        
         startTime = Date.now();
         realStartTime = performance.now();
         
@@ -251,9 +342,18 @@ document.addEventListener("DOMContentLoaded", function () {
     resetGameBtn.addEventListener("click", function() {
         const cells = document.querySelectorAll('.game-cell');
         cells.forEach(cell => {
-            cell.classList.remove('path');
+            cell.classList.remove('path', 'explored');
         });
+        
+        // Hide the chat box
+        document.querySelector('.agent-chat').style.display = 'none';
+        
+        // Clear the chat messages
+        document.getElementById('agent-chat-box').innerHTML = '';
+        
+        // Stop the timer
         clearInterval(timerInterval);
+        
         document.getElementById('game-analytics').style.display = 'none';
         startGameBtn.textContent = 'Start Game';
         startGameBtn.disabled = false;
@@ -265,5 +365,8 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('total-path-cost').textContent = '0';
         const tbody = document.getElementById('path-costs-table').getElementsByTagName('tbody')[0];
         tbody.innerHTML = '';
+        exploredPathCost = 0;
+        optimalPathCost = 0;
+        document.getElementById('explored-path-cost').textContent = '0';
     });
 });

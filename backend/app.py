@@ -43,7 +43,6 @@ def play_game():
     map_name = request.args.get('map')
     algorithm_name = request.args.get('algorithm')
     
-
     # Check if map and algorithm are provided
     if not map_name or not algorithm_name:
         return jsonify({'error': 'Map or Algorithm missing'}), 400
@@ -59,15 +58,19 @@ def play_game():
         # Run the algorithm
         result = run_algorithm(map_data['mapData'], algorithm_name)  # Pass mapData to the algorithm
 
-        # Return the result with mapData included in the response
-        return jsonify({
+        # Prepare the response dictionary
+        response = {
             'mapData': map_data['mapData'],  # Include the map data in the response
             'path': result.get('path', []),  # Include the algorithm result, e.g., the path
+            'explored': result.get('explored', []),  # Include the explored nodes
             'error': result.get('error', None)  # Include any errors from the algorithm
-        })
+        }
+
+        return jsonify(response)
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
