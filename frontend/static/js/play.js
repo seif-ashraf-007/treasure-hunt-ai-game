@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const algorithmSelect = document.getElementById("algorithmSelect");
   const startGameBtn = document.getElementById("startGameBtn");
 
+  const startSound = document.getElementById('gameStartSound');
+  const buttonClickSound = document.getElementById('buttonClickSound');
+
   // Fetch map data from the Flask backend
   fetch("http://127.0.0.1:5000/play/maps")  // Corrected URL to the backend route
     .then((response) => response.json())
@@ -23,17 +26,34 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error fetching maps:", error);
     });
 
-  // Handle the "Start Game" button click
   startGameBtn.addEventListener("click", async function () {
+    if (startSound) {
+      startSound.play();  // Play the start sound when the game starts
+    }
+    
     const selectedMap = mapSelect.value;  // This will be a string (filename)
     const selectedAlgorithm = algorithmSelect.value;
-
+  
     if (!selectedMap || !selectedAlgorithm) {
       alert("Please select a map and an algorithm to start the game.");
       return;
     }
+  
+    // Wait for a short period before redirecting to ensure the sound is played
+    setTimeout(function () {
+      window.location.href = `game.html?map=${selectedMap}&algorithm=${selectedAlgorithm}`;  // Corrected URL to game page
+    }, 1000); // Adjust the time (1000ms = 1 second) if necessary
+  });
 
-    // Redirect to the game page with selected map and algorithm as query parameters
-    window.location.href = `game.html?map=${selectedMap}&algorithm=${selectedAlgorithm}`;  // Corrected URL to game page
+  mapSelect.addEventListener("change", function () {
+    if (buttonClickSound) {
+      buttonClickSound.play();  // Play button click sound when map is selected
+    }
+  });
+  
+  algorithmSelect.addEventListener("change", function () {
+    if (buttonClickSound) {
+      buttonClickSound.play();  // Play button click sound when algorithm is selected
+    }
   });
 });

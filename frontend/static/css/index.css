@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Eater&family=Lakki+Reddy&display=swap');
 
 body {
@@ -101,4 +101,27 @@ main {
     height: auto;
     object-fit: cover; /* Ensures the image covers the space without distortion */
     max-height: 400px; /* Adjust the height limit to fit the design */
+} */
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(7, 50px);
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.grid-item {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.grid-item:hover {
+    border-color: #666;
 }

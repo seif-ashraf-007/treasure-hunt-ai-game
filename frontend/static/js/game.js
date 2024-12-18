@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const startGameBtn = document.getElementById("startGameBtn");
-    const resetGameBtn = document.getElementById("resetGameBtn");
+    
     let startTime;
     let realStartTime;
     let timerInterval;
     let currentPathCost = 0;
     let terrainCounts = {};
+    const gameStartSound = document.getElementById("gameStartSound");
 
     // Get query parameters from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -277,59 +277,61 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
     function startGame() {
-        startTime = Date.now();
-        realStartTime = performance.now();
-        
-        startGameBtn.textContent = 'Solving...';
-        startGameBtn.disabled = true;
+    startTime = Date.now();
+    realStartTime = performance.now();
+    
+    startGameBtn.textContent = 'Solving...';
+    startGameBtn.disabled = true;
 
-        // Reset any existing animations and calculations
-        const cells = document.querySelectorAll('.game-cell');
-        cells.forEach(cell => {
-            cell.classList.remove('path', 'explored');
-        });
-        terrainCounts = {};
-        currentPathCost = 0;
+    const cells = document.querySelectorAll('.game-cell');
+    cells.forEach(cell => {
+        cell.classList.remove('path', 'explored');
+    });
+    terrainCounts = {};
+    currentPathCost = 0;
 
-        // Show analytics immediately
-        document.getElementById('game-analytics').style.display = 'block';
-        document.getElementById('game-status').textContent = 'Solving...';
-        document.getElementById('game-time').textContent = 'Calculating...';
-        document.getElementById('real-time').textContent = '0.00 seconds';
-        document.getElementById('path-length').textContent = 'Calculating...';
+    gameStartSound.play();  // Play the sound at the beginning
 
-        timerInterval = setInterval(updateRealTimeCounter, 10);
+    // Show analytics immediately
+    document.getElementById('game-analytics').style.display = 'block';
+    document.getElementById('game-status').textContent = 'Solving...';
+    document.getElementById('game-time').textContent = 'Calculating...';
+    document.getElementById('real-time').textContent = '0.00 seconds';
+    document.getElementById('path-length').textContent = 'Calculating...';
 
-        fetch(`http://127.0.0.1:5000/game?map=${selectedMap}&algorithm=${selectedAlgorithm}`)
-            .then(response => response.json())
-            .then(async data => {
-                const endTime = Date.now();
-                const algorithmTime = ((endTime - startTime) / 1000).toFixed(2);
-                document.getElementById('game-time').textContent = `${algorithmTime} seconds`;
+    timerInterval = setInterval(updateRealTimeCounter, 10);
 
-                if (data.error) {
-                    document.getElementById('game-status').textContent = 'Error: ' + data.error;
-                    startGameBtn.textContent = 'Start Game';
-                    startGameBtn.disabled = false;
-                    clearInterval(timerInterval);
-                    return;
-                } else {
-                    document.getElementById('game-status').textContent = 'Path Found! Animating...';
-                    await animatePath(data.path, data.explored, data.mapData);
-                    document.getElementById('game-status').textContent = 'Solved!';
-                }
+    fetch(`http://127.0.0.1:5000/game?map=${selectedMap}&algorithm=${selectedAlgorithm}`)
+        .then(response => response.json())
+        .then(async data => {
+            const endTime = Date.now();
+            const algorithmTime = ((endTime - startTime) / 1000).toFixed(2);
+            document.getElementById('game-time').textContent = `${algorithmTime} seconds`;
 
-                startGameBtn.textContent = 'Start Game';
-                startGameBtn.disabled = false;
-            })
-            .catch(error => {
-                console.error("Error starting game:", error);
-                document.getElementById('game-status').textContent = 'Error occurred while solving';
+            if (data.error) {
+                document.getElementById('game-status').textContent = 'Error: ' + data.error;
                 startGameBtn.textContent = 'Start Game';
                 startGameBtn.disabled = false;
                 clearInterval(timerInterval);
-            });
-    }
+                return;
+            } else {
+                document.getElementById('game-status').textContent = 'Path Found! Animating...';
+                await animatePath(data.path, data.explored, data.mapData);
+                document.getElementById('game-status').textContent = 'Solved!';
+            }
+
+            startGameBtn.textContent = 'Start Game';
+            startGameBtn.disabled = false;
+        })
+        .catch(error => {
+            console.error("Error starting game:", error);
+            document.getElementById('game-status').textContent = 'Error occurred while solving';
+            startGameBtn.textContent = 'Start Game';
+            startGameBtn.disabled = false;
+            clearInterval(timerInterval);
+        });
+}
+
 
     // Start Game button click handler
     startGameBtn.addEventListener("click", function() {
