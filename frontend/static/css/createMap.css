@@ -1,0 +1,153 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-color: #f8f8f8;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Header Style */
+h1 {
+    font-family: "Lakki Reddy", serif;
+    font-size: 2.5rem;
+    color: #D2691E;
+    margin-bottom: 20px;
+}
+/* Controls Section */
+.controls {
+    background-color: #F5DEB3;
+    padding: 7px;
+    border-radius: 10px;
+    display: flex; /* Use flexbox to align items inside .controls */
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items horizontally */
+    gap: 7px;
+    margin: 0 auto; /* This will center the element horizontally */
+    margin-bottom: 20px;
+    width: 100%; /* Allow the controls to take up the full width */
+    max-width: 400px; /* Optional: limit the maximum width */
+}
+
+
+/* Label */
+label {
+    font-size: 1.2rem;
+    color: #8B4513;
+    margin-right: 10px; /* Space between label and input/select */
+}
+
+/* Common style for select, input, and button */
+.controls select, .input-field, .btn {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #D2691E;
+    background-color: #fff8dc;
+    color: #333;
+    width: 200px; /* Make them all the same width */
+    margin-bottom: 10px; /* Space between input/select/button */
+}
+
+/* Focus styles */
+.controls select:focus, .input-field:focus, .btn:focus {
+    outline: none;
+    border-color: #8B4513;
+}
+
+/* Button Style */
+button.btn {
+    background-color: #D2691E;
+    color: white;
+    cursor: pointer;
+    font-family: "Lakki Reddy", serif;
+    text-transform: uppercase;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+button.btn:hover {
+    background-color: #8B4513;
+}
+
+
+/* Grid Container */
+.grid-container {
+    display: grid;
+    gap: 5px; /* Space between grid cells */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    background-color: #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.grid-item {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.grid-container div {
+    width: 64px;
+    height: 64px;
+    border: 1px solid #D2691E;
+    background-image: url('../assets/grass2.png');
+    background-size: cover;
+}
+
+/* Tile Hover Effect */
+.grid-container div:hover {
+    border-color: #8B4513;
+    cursor: pointer;
+}
+
+
+#legendContainer {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.legend-item {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    margin-right: 5px;
+}
+
+.legend-item.selected {
+    border: 2px solid #ff0; /* Highlight selected terrain */
+}
+
+.grid-item {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Input Field */
+.input-field {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #D2691E;
+    background-color: #fff8dc;
+    color: #333;
+    width: 200px; /* Set width for the input */
+    margin-bottom: 10px; /* Space between the input and the button */
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #8B4513;
+}

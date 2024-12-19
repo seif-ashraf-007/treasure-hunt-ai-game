@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Treasure Hunt Map</title>
+    <link rel="stylesheet" href="../static/css/createMap.css">
+</head>
+<body>
+    <h1>Create Your Own Treasure Hunt Map</h1>
+
+  <div class="controls">
+    <label for="legendSelect">Create Your Map</label>
+    <input type="text" id="mapName" class="input-field" placeholder="Name Your Map">
+    <select id="legendSelect">
+        <!-- Options populated dynamically -->
+    </select>
+    <button id="saveMap" class="btn">Save Map</button>
+    <p id="error-message" style="color: red; display: none;">Please Choose Name for your Map</p> <!-- Error message -->
+  </div>
+
+
+    <div class="grid-container" id="grid"></div>
+
+    <script src="../static/js/dragDropMapBuilder.js"></script>
+</body>
+</html>
