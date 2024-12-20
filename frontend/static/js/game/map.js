@@ -24,13 +24,11 @@ export function renderMap(data) {
 
             if (rowIndex === data.mapData.start[0] && colIndex === data.mapData.start[1]) {
                 cellDiv.classList.add('start');
-                cellDiv.innerHTML = 'A';
                 cellDiv.style.fontSize = '2rem';
                 cellDiv.style.color = 'red';
             }
             if (rowIndex === data.mapData.goal[0] && colIndex === data.mapData.goal[1]) {
                 cellDiv.classList.add('goal');
-                cellDiv.innerHTML = 'B';
                 cellDiv.style.fontSize = '2rem';
                 cellDiv.style.color = 'blue';
             }

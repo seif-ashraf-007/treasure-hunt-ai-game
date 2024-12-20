@@ -191,7 +191,7 @@ button:disabled {
 
 /* Keep existing game cell styles */
 .game-cell {
-    background-image: url('../assets/grass2.png');
+    background-image: url('../assets/land_6.png');
     background-size: contain;
     width: 64px;
     height: 64px;
@@ -202,27 +202,39 @@ button:disabled {
 
 /* Cell types */
 .game-cell.empty {
-    background-color: #f9f9f9;
+    background-image: url('../assets/land_6.png');
+}
+
+.game-cell.start {
+    background-image: url('../assets/decor_2.png'), url('../assets/road_18.png');   
+    background-repeat: no-repeat;
+}
+
+.game-cell.goal {
+    background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');    
+    background-repeat: no-repeat;
 }
 
 .game-cell.wall {
-    background-image: none;
+    background-image: url('../assets/building_5.png'), url('../assets/land_6.png');    
     background-color: #333;
+    background-repeat: no-repeat;
 }
 
 .game-cell.water {
-    background-image: url('../assets/water.png');
+    background-image: url('../assets/lake.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat;
 }
 
 .game-cell.rock {
-    background-image: url('../assets/rocks.png'), url('../assets/grass2.png');
+    background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
     background-repeat: no-repeat;
     background-position: center;
     
 }
 
 .game-cell.forest {
-    background-image: url('../assets/tree.png'), url('../assets/grass2.png');    
+    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');    
     background-repeat: no-repeat;
     background-position: center;
 }
