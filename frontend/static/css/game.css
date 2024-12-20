@@ -36,10 +36,10 @@ h1 {
 /* Game Info Section */
 .game-info {
     background-color: #f5deb3;
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 15px;
     border-radius: 8px;
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .game-info p {
@@ -81,21 +81,17 @@ button:disabled {
 
 /* Game Container */
 .game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 15px;
 }
 
 /* Analytics Section */
 .game-analytics {
-    width: 100%;
-    max-width: 600px;
-    margin-top: 20px;
-    background-color: #f5deb3;
-    color: #8B4513;
-    padding: 20px;
+    background-color: #F5DEB3;
+    padding: 1.5rem;
     border-radius: 8px;
+    margin-top: 1rem;
 }
 
 .analytics-content {
@@ -105,99 +101,122 @@ button:disabled {
 }
 
 .analytics-section {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 15px;
-    border-radius: 8px;
+    margin-bottom: 1.5rem;
 }
 
-.analytics-section p {
-    margin: 10px 0;
-    font-size: 0.9rem;
-}
-
-.path-details {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.path-details h4 {
+.analytics-section h3 {
     color: #D2691E;
-    margin-bottom: 15px;
     font-family: "Eater", serif;
-    text-align: center;
+    margin-bottom: 1rem;
 }
 
-.table-container {
-    overflow-x: auto;
-    margin: 10px 0;
-}
-
-#path-costs-table {
+/* Path Costs Table */
+.path-costs-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 5px;
-    font-size: 0.9rem;
+    margin: 1rem 0;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-#path-costs-table th,
-#path-costs-table td {
-    padding: 8px;
-    text-align: center;
-    border: 1px solid #D2691E;
-}
-
-#path-costs-table th {
+.path-costs-table thead {
     background-color: #D2691E;
     color: white;
+}
+
+.path-costs-table th {
+    padding: 12px;
+    text-align: left;
     font-family: "Lakki Reddy", serif;
-    font-size: 0.85rem;
+    font-weight: normal;
 }
 
-#path-costs-table tr:nth-child(even) {
-    background-color: rgba(255, 255, 255, 0.3);
+.path-costs-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #f0e0d0;
 }
 
-#path-costs-table tr:hover {
-    background-color: rgba(210, 105, 30, 0.1);
+.path-costs-table tbody tr:nth-child(even) {
+    background-color: #fff8f0;
 }
 
-.total-cost {
-    margin-top: 15px;
-    text-align: right;
+.path-costs-table tbody tr:hover {
+    background-color: #fff0e0;
+}
+
+.path-costs-table .summary-row {
     font-weight: bold;
-    padding-right: 10px;
+    background-color: #f5e6d3 !important;
+    border-top: 2px solid #D2691E;
 }
 
-.game-with-analytics {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 200px;
+/* Status Styles */
+.status-exploring {
+    color: #2196F3;
+}
+
+.status-complete {
+    color: #4CAF50;
+}
+
+.status-error {
+    color: #f44336;
+}
+
+/* Statistics Display */
+.statistics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.stat-item {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item label {
+    display: block;
+    color: #8B4513;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.stat-item span {
+    font-size: 1.2rem;
+    color: #D2691E;
+    font-family: "Lakki Reddy", serif;
 }
 
 /* Game Board */
 #game-board {
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
+    background-color: #8B4513;
+    padding: 2px;
+    border-radius: 8px;
+    display: grid;
+    gap: 2px;
 }
 
 .game-row {
     display: flex;
+    gap: 2px;
 }
 
 /* Keep existing game cell styles */
 .game-cell {
-    background-image: url('../assets/land_6.png');
-    background-size: contain;
-    width: 64px;
-    height: 64px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 48px;
+    height: 48px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 /* Cell types */
@@ -206,13 +225,11 @@ button:disabled {
 }
 
 .game-cell.start {
-    background-image: url('../assets/decor_2.png'), url('../assets/road_18.png');   
-    background-repeat: no-repeat;
+    background-image: url('../assets/decor_2.png'), url('../assets/road_18.png');
 }
 
 .game-cell.goal {
-    background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');    
-    background-repeat: no-repeat;
+    background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');
 }
 
 .game-cell.wall {
@@ -223,20 +240,14 @@ button:disabled {
 
 .game-cell.water {
     background-image: url('../assets/lake.png'), url('../assets/land_6.png');
-    background-repeat: no-repeat;
 }
 
 .game-cell.rock {
     background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    
 }
 
 .game-cell.forest {
-    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');    
-    background-repeat: no-repeat;
-    background-position: center;
+    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');
 }
 
 .game-cell.path {
@@ -257,23 +268,20 @@ button:disabled {
 
 /* Agent Chat Styles */
 .agent-chat {
-    width: 800px;
-    background-color: #f5deb3;
-    border-radius: 12px;
-    padding: 15px;
-    margin-right: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: none; /* Hidden by default */
-    animation: slideIn 0.5s ease-out;
+    background-color: #F5DEB3;
+    border-radius: 8px;
+    padding: 1rem;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-box {
-    height: 400px;
+    flex-grow: 1;
     overflow-y: auto;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 1rem;
     border-radius: 8px;
-    scroll-behavior: smooth;
 }
 
 .chat-message {
@@ -308,46 +316,148 @@ button:disabled {
 /* Agent Styles */
 .agent {
     position: absolute;
-    font-size: 2rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 100;
+    width: 48px;
+    height: 48px;
+    pointer-events: none;
+    z-index: 1000;
+    transition: all 0.5s ease-in-out;
 }
 
-/* Update explored and path animations */
-.game-cell.explored {
+.agent-character {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Agent Body Parts */
+.agent-hat {
+    width: 20px;
+    height: 8px;
+    background-color: #8B4513;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    margin-bottom: -2px;
+}
+
+.agent-head {
+    width: 14px;
+    height: 14px;
+    background-color: #DEB887;
+    border-radius: 50%;
     position: relative;
 }
 
-.game-cell.explored::before {
+.agent-head::before,
+.agent-head::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: #000;
+    border-radius: 50%;
+    top: 5px;
+}
+
+.agent-head::before {
+    left: 3px;
+}
+
+.agent-head::after {
+    right: 3px;
+}
+
+.agent-body {
+    width: 16px;
+    height: 20px;
+    background-color: #D2691E;
+    border-radius: 4px;
+    margin-top: -2px;
+}
+
+.agent-shadow {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+/* Agent Movement Animations */
+.agent.moving .agent-character {
+    animation: bounce 0.5s ease-in-out infinite;
+}
+
+.agent.moving-right .agent-character {
+    transform: scaleX(1);
+}
+
+.agent.moving-left .agent-character {
+    transform: scaleX(-1);
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+/* Explored Cell Animation */
+.game-cell.explored::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(255, 0, 0, 0.3);
-    animation: exploreAnimation 0.5s ease-in-out;
+    background: rgba(255, 0, 0, 0.3);
+    animation: explore 0.5s ease-out;
+    z-index: 1;
 }
 
-.game-cell.path::before {
+@keyframes explore {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Path Cell Animation */
+.game-cell.path::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 255, 0, 0.3);
-    animation: pathAnimation 0.5s ease-in-out;
+    background: rgba(0, 255, 0, 0.3);
+    animation: pathReveal 0.5s ease-out;
+    z-index: 2;
 }
 
-@keyframes exploreAnimation {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes pathReveal {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* Slide in animation for chat */
@@ -364,120 +474,628 @@ button:disabled {
 
 /* Responsive Game Layout */
 .game-with-analytics {
+    display: grid;
+    grid-template-columns: 250px minmax(auto, 600px) 250px;
+    gap: 15px;
+    align-items: start;
+}
+
+/* Map Section */
+.map {
+    background-color: #F5DEB3;
+    padding: 15px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 15px;
+    align-items: center;
 }
 
-/* Make game board responsive */
 #game-board {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 10px;
-}
-
-.game-row {
-    display: flex;
-    justify-content: center;
-    width: 100%;
+    background-color: #8B4513;
+    padding: 2px;
+    border-radius: 8px;
+    display: grid;
+    gap: 2px;
 }
 
 .game-cell {
-    width: min(64px, calc(100vw / 12));
-    height: min(64px, calc(100vw / 12));
-    min-width: 40px;
-    min-height: 40px;
+    width: 48px;
+    height: 48px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 4px;
 }
 
-/* Responsive chat and analytics */
+/* Cell States */
+.game-cell.explored::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 0, 0, 0.3);
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.game-cell.path::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 255, 0, 0.3);
+    border-radius: 4px;
+    z-index: 2;
+}
+
+/* Chat Section */
 .agent-chat {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    background-color: #F5DEB3;
+    padding: 15px;
+    border-radius: 8px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
 }
 
-.game-analytics {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+.chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
 }
 
-/* Responsive table */
-.table-container {
-    width: 100%;
-    overflow-x: auto;
-}
-
-/* Media Queries */
-@media screen and (min-width: 1024px) {
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
     .game-with-analytics {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 40px;
+        grid-template-columns: 200px minmax(auto, 500px) 200px;
+    }
+    
+    .game-cell {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .game-container {
+        padding: 10px;
     }
 
-    .agent-chat {
-        width: 30%;
-        min-width: 300px;
+    .game-with-analytics {
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
 
     .map {
-        width: 40%;
-        min-width: 400px;
+        order: -1;
+        padding: 10px;
     }
 
-    .game-analytics {
-        width: 30%;
-        min-width: 300px;
+    .agent-chat, .game-analytics {
+        height: auto;
+        max-height: 300px;
+    }
+
+    .game-cell {
+        width: 36px;
+        height: 36px;
     }
 }
 
-@media screen and (max-width: 768px) {
-    .game-info p {
-        font-size: 1.1rem;
+@media screen and (max-width: 600px) {
+    .game-cell {
+        width: 32px;
+        height: 32px;
     }
 
     .button-container {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
     }
 
     button {
         width: 100%;
-        max-width: 300px;
-    }
-
-    .analytics-section p {
-        font-size: 0.85rem;
-    }
-
-    #path-costs-table th,
-    #path-costs-table td {
-        padding: 6px;
-        font-size: 0.8rem;
+        margin: 5px 0;
     }
 }
 
-@media screen and (max-width: 480px) {
-    header h1 {
-        font-size: 1.8rem;
+@media screen and (max-width: 400px) {
+    .game-cell {
+        width: 28px;
+        height: 28px;
+    }
+}
+
+/* Status Colors */
+#game-status.status-exploring {
+    color: #2196F3;
+}
+
+#game-status.status-complete {
+    color: #4CAF50;
+}
+
+#game-status.status-error {
+    color: #f44336;
+}
+
+/* Map Guide Styles */
+.map-guide {
+    background-color: #F5DEB3;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.map-guide h2 {
+    color: #D2691E;
+    font-family: "Eater", serif;
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.guide-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 10px;
+    justify-items: center;
+}
+
+.guide-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+.guide-cell {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    background-size: cover;
+    position: relative;
+}
+
+.guide-item p {
+    font-size: 0.8rem;
+    margin: 2px 0;
+    color: #8B4513;
+    font-weight: bold;
+}
+
+.guide-desc {
+    font-size: 0.7rem;
+    color: #666;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    .game-with-analytics {
+        grid-template-columns: 200px minmax(auto, 600px) 200px;
     }
 
     .game-cell {
-        min-width: 32px;
-        min-height: 32px;
+        width: 40px;
+        height: 40px;
     }
 
-    .chat-box {
+    .agent {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .game-with-analytics {
+        grid-template-columns: 1fr;
+    }
+
+    .map {
+        order: -1;
+    }
+
+    .game-cell {
+        width: 36px;
+        height: 36px;
+    }
+
+    .agent {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .game-cell {
+        width: 32px;
+        height: 32px;
+    }
+
+    .agent {
+        width: 32px;
+        height: 32px;
+    }
+
+    .agent-hat {
+        width: 16px;
+        height: 6px;
+    }
+
+    .agent-head {
+        width: 12px;
+        height: 12px;
+    }
+
+    .agent-body {
+        width: 14px;
+        height: 16px;
+    }
+}
+
+/* Game Layout */
+.game-with-analytics {
+    display: grid;
+    grid-template-columns: 250px minmax(auto, 800px) 250px;
+    gap: 20px;
+    align-items: start;
+}
+
+/* Map Section */
+.map {
+    background-color: #F5DEB3;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#game-board {
+    background-color: #8B4513;
+    padding: 2px;
+    border-radius: 8px;
+    display: grid;
+    gap: 2px;
+}
+
+.game-row {
+    display: flex;
+    gap: 2px;
+}
+
+.game-cell {
+    width: 48px;
+    height: 48px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Cell Types */
+.game-cell.empty {
+    background-image: url('../assets/land_6.png');
+}
+
+.game-cell.water {
+    background-image: url('../assets/lake.png'), url('../assets/land_6.png');
+}
+
+.game-cell.forest {
+    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');
+}
+
+.game-cell.rock {
+    background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
+}
+
+.game-cell.start {
+    background-image: url('../assets/decor_2.png'), url('../assets/road_18.png');
+}
+
+.game-cell.goal {
+    background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');
+}
+
+/* Explored and Path Overlays */
+.game-cell.explored::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.game-cell.path::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 255, 0, 0.3);
+    z-index: 2;
+}
+
+/* Agent Styles */
+.agent {
+    position: absolute;
+    width: 48px;
+    height: 48px;
+    pointer-events: none;
+    z-index: 1000;
+    transition: all 0.5s ease-in-out;
+}
+
+.agent-character {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.agent-hat {
+    width: 20px;
+    height: 8px;
+    background-color: #8B4513;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    margin-bottom: -2px;
+}
+
+.agent-head {
+    width: 14px;
+    height: 14px;
+    background-color: #DEB887;
+    border-radius: 50%;
+    position: relative;
+}
+
+.agent-head::before,
+.agent-head::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background-color: #000;
+    border-radius: 50%;
+    top: 5px;
+}
+
+.agent-head::before {
+    left: 3px;
+}
+
+.agent-head::after {
+    right: 3px;
+}
+
+.agent-body {
+    width: 16px;
+    height: 20px;
+    background-color: #D2691E;
+    border-radius: 4px;
+    margin-top: -2px;
+}
+
+.agent-shadow {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    filter: blur(1px);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1200px) {
+    .game-with-analytics {
+        grid-template-columns: 200px minmax(auto, 600px) 200px;
+    }
+
+    .game-cell {
+        width: 40px;
+        height: 40px;
+    }
+
+    .agent {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .game-with-analytics {
+        grid-template-columns: 1fr;
+    }
+
+    .map {
+        order: -1;
+    }
+
+    .game-cell {
+        width: 36px;
+        height: 36px;
+    }
+
+    .agent {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .game-cell {
+        width: 32px;
+        height: 32px;
+    }
+
+    .agent {
+        width: 32px;
+        height: 32px;
+    }
+
+    .agent-hat {
+        width: 16px;
+        height: 6px;
+    }
+
+    .agent-head {
+        width: 12px;
+        height: 12px;
+    }
+
+    .agent-body {
+        width: 14px;
+        height: 16px;
+    }
+}
+
+/* Chat Styles */
+.agent-chat {
+    background-color: #F5DEB3;
+    border-radius: 8px;
+    padding: 15px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.chat-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.agent-thinking {
+    background-color: #fff3e0;
+}
+
+.agent-action {
+    background-color: #e8f5e9;
+}
+
+.agent-error {
+    background-color: #ffebee;
+}
+
+/* Map Guide Styles */
+.guide-cell.empty {
+    background-image: url('../assets/land_6.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.guide-cell.water {
+    background-image: url('../assets/lake.png'), url('../assets/land_6.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.guide-cell.forest {
+    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.guide-cell.rock {
+    background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.guide-cell.start {
+    background-image: url('../assets/decor_2.png'), url('../assets/road_18.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.guide-cell.goal {
+    background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.guide-cell.explored-example {
+    background-image: url('../assets/land_6.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.guide-cell.explored-example::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.guide-cell.path-example {
+    background-image: url('../assets/land_6.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.guide-cell.path-example::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 255, 0, 0.3);
+    border-radius: 4px;
+}
+
+/* Responsive Layout */
+@media screen and (max-width: 1200px) {
+    .game-with-analytics {
+        grid-template-columns: 200px minmax(auto, 600px) 200px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .game-with-analytics {
+        grid-template-columns: 1fr;
+    }
+
+    .agent-chat {
         height: 300px;
     }
 
-    .analytics-section p {
-        font-size: 0.8rem;
+    .map {
+        order: -1;
     }
 }

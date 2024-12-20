@@ -1,40 +1,59 @@
+import { createAgent } from './agent.js';
+
 export function renderMap(data) {
     const gameBoard = document.getElementById('game-board');
-    if (!gameBoard) return;
+    if (!gameBoard || !data.mapData) return;
 
     gameBoard.innerHTML = '';
-    if (!data.mapData || !data.mapData.grid) {
-        console.error('Map data is missing or invalid.');
-        return;
+    const grid = data.mapData.grid;
+    
+    // Calculate cell size based on viewport width
+    const calculateCellSize = () => {
+        if (window.innerWidth <= 400) return 28;
+        if (window.innerWidth <= 600) return 32;
+        if (window.innerWidth <= 900) return 36;
+        if (window.innerWidth <= 1200) return 40;
+        return 48;
+    };
+
+    const cellSize = calculateCellSize();
+    const columns = grid[0].length;
+    
+    // Set grid template and size
+    gameBoard.style.gridTemplateColumns = `repeat(${columns}, ${cellSize}px)`;
+    
+    // Create grid cells
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            const cell = document.createElement('div');
+            cell.classList.add('game-cell');
+            cell.dataset.row = i;
+            cell.dataset.col = j;
+            
+            // Add terrain class
+            const terrainType = data.mapData.legend[grid[i][j].toString()];
+            cell.classList.add(terrainType);
+            
+            // Add start and goal positions
+            if (i === data.mapData.start[0] && j === data.mapData.start[1]) {
+                cell.classList.add('start');
+            }
+            if (i === data.mapData.goal[0] && j === data.mapData.goal[1]) {
+                cell.classList.add('goal');
+            }
+            
+            gameBoard.appendChild(cell);
+        }
     }
 
-    const legend = data.mapData.legend;
+    // Create agent at start position
+    if (data.mapData.start) {
+        createAgent(data.mapData.start);
+    }
 
-    data.mapData.grid.forEach((row, rowIndex) => {
-        const rowDiv = document.createElement('div');
-        rowDiv.classList.add('game-row');
-        row.forEach((cell, colIndex) => {
-            const cellDiv = document.createElement('div');
-            cellDiv.classList.add('game-cell');
-            cellDiv.dataset.row = rowIndex;
-            cellDiv.dataset.col = colIndex;
-
-            const cellType = legend[cell.toString()];
-            cellDiv.classList.add(cellType);
-
-            if (rowIndex === data.mapData.start[0] && colIndex === data.mapData.start[1]) {
-                cellDiv.classList.add('start');
-                cellDiv.style.fontSize = '2rem';
-                cellDiv.style.color = 'red';
-            }
-            if (rowIndex === data.mapData.goal[0] && colIndex === data.mapData.goal[1]) {
-                cellDiv.classList.add('goal');
-                cellDiv.style.fontSize = '2rem';
-                cellDiv.style.color = 'blue';
-            }
-
-            rowDiv.appendChild(cellDiv);
-        });
-        gameBoard.appendChild(rowDiv);
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        const newCellSize = calculateCellSize();
+        gameBoard.style.gridTemplateColumns = `repeat(${columns}, ${newCellSize}px)`;
     });
 }

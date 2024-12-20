@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Map - Treasure Hunt AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Zeyada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/create-map.css">
+</head>
+<body>
+    <header>
+        <a href="/frontend/"><h1>The Treasure Hunt AI</h1></a>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="play.html">Play</a></li>
+                <li><a href="maps.html">Maps</a></li>
+                <li><a href="create-map.html">Create Map</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="map-creator">
+            <div class="tools-panel">
+                <h2>Map Tools</h2>
+                <div class="map-settings">
+                    <div class="input-group">
+                        <label for="mapName">Map Name:</label>
+                        <input type="text" id="mapName" placeholder="Enter map name">
+                    </div>
+                    <div class="input-group">
+                        <label for="mapSize">Map Size:</label>
+                        <select id="mapSize">
+                            <option value="8">8x8</option>
+                            <option value="10">10x10</option>
+                            <option value="12">12x12</option>
+                            <option value="15">15x15</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="terrain-tools">
+                    <h3>Terrain Types</h3>
+                    <div class="terrain-items">
+                        <div class="terrain-item" draggable="true" data-terrain="empty">
+                            <div class="terrain empty"></div>
+                            <span>Empty (1)</span>
+                        </div>
+                        <div class="terrain-item" draggable="true" data-terrain="water">
+                            <div class="terrain water"></div>
+                            <span>Water (3)</span>
+                        </div>
+                        <div class="terrain-item" draggable="true" data-terrain="forest">
+                            <div class="terrain forest"></div>
+                            <span>Forest (2)</span>
+                        </div>
+                        <div class="terrain-item" draggable="true" data-terrain="rock">
+                            <div class="terrain rock"></div>
+                            <span>Rock (4)</span>
+                        </div>
+                        <div class="terrain-item" draggable="true" data-terrain="start">
+                            <div class="terrain start"></div>
+                            <span>Start</span>
+                        </div>
+                        <div class="terrain-item" draggable="true" data-terrain="goal">
+                            <div class="terrain goal"></div>
+                            <span>Goal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="map-actions">
+                    <button id="createMapBtn">Create New Map</button>
+                    <button id="saveMapBtn">Save Map</button>
+                    <button id="clearMapBtn">Clear Map</button>
+                </div>
+            </div>
+
+            <div class="map-editor">
+                <div id="mapGrid" class="map-grid">
+                    <!-- Grid will be generated here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../static/js/create-map.js"></script>
+</body>
+</html> 

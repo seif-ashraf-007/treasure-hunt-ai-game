@@ -14,21 +14,16 @@ MAPS_DIRECTORY = './maps'
 
 # Function to load the map from the specified file
 def load_map(map_name):
+    """Load map data from a JSON file."""
     try:
-        map_file_path = os.path.join(MAPS_DIRECTORY, map_name)
-        if not os.path.exists(map_file_path):
-            return {"error": "Map file not found"}
-        
-        with open(map_file_path) as f:
+        map_path = os.path.join('./maps', map_name)
+        with open(map_path, 'r') as f:
             map_data = json.load(f)
-        
-        # Ensure the structure is correct
-        if 'mapData' not in map_data:
-            return {"error": "Map data is missing or invalid - LOAD MAP"}
-        
-        return map_data  # Return the full map data object for later use
+            # Return the map data directly since it already contains all necessary information
+            return {'mapData': map_data}
     except Exception as e:
-        return {"error": f"An error occurred: {str(e)}"}
+        print(f"Error loading map: {str(e)}")
+        return None
 
 
 # Function to run the selected algorithm

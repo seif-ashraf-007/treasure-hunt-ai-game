@@ -9,74 +9,106 @@ function getRandomMessage(type, replacements) {
 }
 
 export async function animatePath(agent, path, explored, mapData, algorithmTime, startTime) {
+    let isCancelled = false;
     let terrainCounts = {};
     let exploredPathCost = 0;
     let optimalPathCost = 0;
+    let exploredTerrainCounts = {};
 
-    updateGameStatus('Exploring...');
-    
-    // Exploring phase
-    for (const pos of explored) {
-        const [row, col] = pos;
-        const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
-        if (cell) {
-            const terrainValue = mapData.grid[row][col];
-            const terrainType = mapData.legend[terrainValue];
-            const stepCost = mapData.costs[terrainType];
+    const animation = {
+        stop: () => {
+            isCancelled = true;
+        }
+    };
 
-            exploredPathCost += stepCost;
-            document.getElementById('explored-path-cost').textContent = exploredPathCost;
+    try {
+        updateGameStatus('Exploring...');
+        updateTimings(algorithmTime, 0);
+        
+        // Exploring phase
+        for (const pos of explored) {
+            if (isCancelled) return;
 
-            const message = getRandomMessage('exploring', {
-                terrain: terrainType,
-                cost: stepCost
+            const [row, col] = pos;
+            const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
+            if (cell) {
+                const terrainValue = mapData.grid[row][col];
+                const terrainType = mapData.legend[terrainValue];
+                const stepCost = mapData.costs[terrainType];
+
+                // Track explored cells
+                if (!exploredTerrainCounts[terrainType]) {
+                    exploredTerrainCounts[terrainType] = { count: 0, cost: stepCost };
+                }
+                exploredTerrainCounts[terrainType].count++;
+                
+                exploredPathCost += stepCost;
+                document.getElementById('explored-path-cost').textContent = exploredPathCost;
+
+                const message = getRandomMessage('exploring', {
+                    terrain: terrainType,
+                    cost: stepCost
+                });
+                addAgentMessage(message);
+                await moveAgent(agent, [row, col], [row, col]);
+                if (!isCancelled) {
+                    cell.classList.add('explored');
+                }
+
+                const currentTime = (performance.now() - startTime) / 1000;
+                updateTimings(algorithmTime, currentTime);
+            }
+        }
+
+        if (isCancelled) return;
+
+        updateGameStatus('Following optimal path...');
+        
+        // Reset agent position
+        const startCell = document.querySelector(`.game-cell[data-row='${mapData.start[0]}'][data-col='${mapData.start[1]}']`);
+        if (startCell) {
+            const rect = startCell.getBoundingClientRect();
+            agent.style.left = `${rect.left}px`;
+            agent.style.top = `${rect.top}px`;
+            await new Promise(resolve => setTimeout(resolve, 300));
+        }
+        
+        // Optimal path phase
+        for (const [row, col] of path) {
+            if (isCancelled) return;
+
+            const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
+            if (cell) {
+                const terrainValue = mapData.grid[row][col];
+                const terrainType = mapData.legend[terrainValue];
+                const stepCost = mapData.costs[terrainType];
+
+                optimalPathCost += stepCost;
+                document.getElementById('path-length').textContent = optimalPathCost;
+
+                if (!isCancelled) {
+                    cell.classList.add('path');
+                }
+                await moveAgent(agent, [row, col], [row, col]);
+
+                updateAnalytics(terrainCounts, terrainType, stepCost);
+            }
+        }
+
+        if (!isCancelled) {
+            updateGameStatus('Complete');
+            const completionMessage = getRandomMessage('pathFound', {
+                cost: optimalPathCost
             });
-            addAgentMessage(message);
-            await moveAgent(agent, [row, col], [row, col]);
-            cell.classList.add('explored');
-
-            const currentTime = (performance.now() - startTime) / 1000;
-            updateTimings(algorithmTime, currentTime);
+            addAgentMessage(completionMessage, "action");
+        }
+    } catch (error) {
+        console.error('Animation error:', error);
+        if (!isCancelled) {
+            updateGameStatus('Error');
+            addAgentMessage('An error occurred during the animation', 'error');
         }
     }
 
-    const finalExplorationTime = (performance.now() - startTime) / 1000;
-    updateTimings(algorithmTime, finalExplorationTime);
-    
-    updateGameStatus('Following optimal path...');
-    
-    // Move agent back to start position before following optimal path
-    const startCell = document.querySelector(`.game-cell[data-row='${mapData.start[0]}'][data-col='${mapData.start[1]}']`);
-    if (startCell) {
-        const rect = startCell.getBoundingClientRect();
-        agent.style.left = `${rect.left}px`;
-        agent.style.top = `${rect.top}px`;
-        await new Promise(resolve => setTimeout(resolve, 300));
-    }
-    
-    // Optimal path phase
-    for (let i = 0; i < path.length; i++) {
-        const [row, col] = path[i];
-        const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
-        if (cell) {
-            const terrainValue = mapData.grid[row][col];
-            const terrainType = mapData.legend[terrainValue];
-            const stepCost = mapData.costs[terrainType];
-
-            optimalPathCost += stepCost;
-            document.getElementById('path-length').textContent = optimalPathCost;
-
-            cell.classList.add('path');
-            // Move agent to current position
-            await moveAgent(agent, path[i], path[i]);
-
-            updateAnalytics(terrainCounts, terrainType, stepCost);
-        }
-    }
-
-    updateGameStatus('Complete');
-    const completionMessage = getRandomMessage('pathFound', {
-        cost: optimalPathCost
-    });
-    addAgentMessage(completionMessage, "action");
+    return animation;
 }
