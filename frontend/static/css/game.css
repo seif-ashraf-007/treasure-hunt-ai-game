@@ -349,3 +349,123 @@ button:disabled {
         transform: translateX(0);
     }
 }
+
+/* Responsive Game Layout */
+.game-with-analytics {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 15px;
+}
+
+/* Make game board responsive */
+#game-board {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.game-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.game-cell {
+    width: min(64px, calc(100vw / 12));
+    height: min(64px, calc(100vw / 12));
+    min-width: 40px;
+    min-height: 40px;
+}
+
+/* Responsive chat and analytics */
+.agent-chat {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.game-analytics {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Responsive table */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Media Queries */
+@media screen and (min-width: 1024px) {
+    .game-with-analytics {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 40px;
+    }
+
+    .agent-chat {
+        width: 30%;
+        min-width: 300px;
+    }
+
+    .map {
+        width: 40%;
+        min-width: 400px;
+    }
+
+    .game-analytics {
+        width: 30%;
+        min-width: 300px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .game-info p {
+        font-size: 1.1rem;
+    }
+
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .analytics-section p {
+        font-size: 0.85rem;
+    }
+
+    #path-costs-table th,
+    #path-costs-table td {
+        padding: 6px;
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .game-cell {
+        min-width: 32px;
+        min-height: 32px;
+    }
+
+    .chat-box {
+        height: 300px;
+    }
+
+    .analytics-section p {
+        font-size: 0.8rem;
+    }
+}
