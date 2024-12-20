@@ -9,16 +9,18 @@
 <body>
     <h1>Create Your Own Treasure Hunt Map</h1>
 
-  <div class="controls">
-    <label for="legendSelect">Create Your Map</label>
-    <input type="text" id="mapName" class="input-field" placeholder="Name Your Map">
-    <select id="legendSelect">
-        <!-- Options populated dynamically -->
-    </select>
-    <button id="saveMap" class="btn">Save Map</button>
-    <p id="error-message" style="color: red; display: none;">Please Choose Name for your Map</p> <!-- Error message -->
-  </div>
+    <div class="controls">
+        <label for="mapName">Map Name:</label>
+        <input type="text" id="mapName" class="input-field" placeholder="Name Your Map" required>
+        
+        <label for="legendSelect">Add Items to Your Map:</label>
+        <select id="legendSelect">
+            <!-- Options populated dynamically -->
+        </select>
 
+        <button id="saveMap" class="btn">Save Map</button>
+        <p id="error-message" style="color: red; display: none;">Please provide a name for your map!</p>
+    </div>
 
     <div class="grid-container" id="grid"></div>
 

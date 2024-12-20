@@ -20,27 +20,27 @@ h1 {
     color: #D2691E;
     margin-bottom: 20px;
 }
+
 /* Controls Section */
 .controls {
     background-color: #F5DEB3;
-    padding: 7px;
+    padding: 15px;
     border-radius: 10px;
-    display: flex; /* Use flexbox to align items inside .controls */
-    flex-direction: column; /* Stack items vertically */
-    align-items: center; /* Center items horizontally */
-    gap: 7px;
-    margin: 0 auto; /* This will center the element horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 0 auto;
     margin-bottom: 20px;
-    width: 100%; /* Allow the controls to take up the full width */
-    max-width: 400px; /* Optional: limit the maximum width */
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 /* Label */
 label {
     font-size: 1.2rem;
     color: #8B4513;
-    margin-right: 10px; /* Space between label and input/select */
 }
 
 /* Common style for select, input, and button */
@@ -51,14 +51,16 @@ label {
     border: 1px solid #D2691E;
     background-color: #fff8dc;
     color: #333;
-    width: 200px; /* Make them all the same width */
-    margin-bottom: 10px; /* Space between input/select/button */
+    width: 200px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 /* Focus styles */
-.controls select:focus, .input-field:focus, .btn:focus {
+.controls select:focus, .input-field:focus {
     outline: none;
     border-color: #8B4513;
+    background-color: #fffbf0;
 }
 
 /* Button Style */
@@ -69,24 +71,25 @@ button.btn {
     font-family: "Lakki Reddy", serif;
     text-transform: uppercase;
     border: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button.btn:hover {
     background-color: #8B4513;
+    transform: scale(1.05);
 }
-
 
 /* Grid Container */
 .grid-container {
     display: grid;
-    gap: 5px; /* Space between grid cells */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
     background-color: #ddd;
     padding: 10px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
 .grid-item {
@@ -94,8 +97,10 @@ button.btn:hover {
     height: 50px;
     border: 1px solid #ccc;
     background-color: #fff;
+    box-sizing: border-box;
 }
 
+/* Default Grid Cell Style */
 .grid-container div {
     width: 64px;
     height: 64px;
@@ -104,16 +109,21 @@ button.btn:hover {
     background-size: cover;
 }
 
-/* Tile Hover Effect */
+/* Grid Cell Hover Effect */
 .grid-container div:hover {
     border-color: #8B4513;
     cursor: pointer;
+    transform: scale(1.02);
+    transition: transform 0.2s ease, border-color 0.3s ease;
 }
 
-
+/* Legend Section */
 #legendContainer {
     display: flex;
-    margin-bottom: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
 }
 
 .legend-item {
@@ -122,17 +132,12 @@ button.btn:hover {
     cursor: pointer;
     border: 2px solid #ccc;
     margin-right: 5px;
+    transition: border-color 0.3s ease, transform 0.2s ease;
 }
 
 .legend-item.selected {
     border: 2px solid #ff0; /* Highlight selected terrain */
-}
-
-.grid-item {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
+    transform: scale(1.1);
 }
 
 /* Input Field */
@@ -143,11 +148,21 @@ button.btn:hover {
     border: 1px solid #D2691E;
     background-color: #fff8dc;
     color: #333;
-    width: 200px; /* Set width for the input */
-    margin-bottom: 10px; /* Space between the input and the button */
+    width: 200px;
+    margin-bottom: 10px;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .input-field:focus {
     outline: none;
     border-color: #8B4513;
+    background-color: #fffbf0;
+}
+
+/* Error Message */
+#error-message {
+    font-size: 0.9rem;
+    color: red;
+    display: none;
+    margin-top: -10px;
 }
