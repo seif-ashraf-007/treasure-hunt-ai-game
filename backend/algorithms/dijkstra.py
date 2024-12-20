@@ -20,7 +20,6 @@ def dijkstra_algorithm(map_data):
     costs = map_data['costs']
     legend = map_data['legend']
     
-    # Priority queue for Dijkstra
     pq = [(0, start, [start])]
     visited = set()
     explored = []

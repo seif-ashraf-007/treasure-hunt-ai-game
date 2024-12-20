@@ -12,21 +12,18 @@ from algorithms.best_first import best_first_algorithm
 
 MAPS_DIRECTORY = './maps'
 
-# Function to load the map from the specified file
 def load_map(map_name):
     """Load map data from a JSON file."""
     try:
         map_path = os.path.join('./maps', map_name)
         with open(map_path, 'r') as f:
             map_data = json.load(f)
-            # Return the map data directly since it already contains all necessary information
             return {'mapData': map_data}
     except Exception as e:
         print(f"Error loading map: {str(e)}")
         return None
 
 
-# Function to run the selected algorithm
 def run_algorithm(map_data, algorithm_name):
     if not map_data or not isinstance(map_data, dict):
         return {"error": "Map data is missing or invalid"}

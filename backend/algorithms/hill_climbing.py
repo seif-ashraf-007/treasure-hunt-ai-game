@@ -31,19 +31,17 @@ def hill_climbing_algorithm(map_data):
         if not neighbors:
             break
             
-        # Find the neighbor that's closest to the goal
         best_neighbor = None
         best_distance = float('inf')
         
         for neighbor in neighbors:
-            if neighbor not in path:  # Avoid cycles
+            if neighbor not in path: 
                 distance = manhattan_distance(neighbor, goal)
                 if distance < best_distance:
                     best_distance = distance
                     best_neighbor = neighbor
         
         if best_neighbor is None or manhattan_distance(best_neighbor, goal) >= manhattan_distance(current, goal):
-            # We're stuck in a local minimum
             break
             
         current = best_neighbor

@@ -7,7 +7,6 @@ from map_handler import load_map, run_algorithm
 
 app = Flask(__name__)
 
-# CORS configuration
 CORS(app, resources={
     r"/*": {
         "origins": ["http://127.0.0.1:5500", "http://localhost:5500"],
@@ -17,7 +16,6 @@ CORS(app, resources={
     }
 })
 
-# Directory containing map files
 MAPS_DIRECTORY = './maps'
 
 @app.after_request
@@ -34,15 +32,12 @@ def create_map():
     try:
         map_data = request.json
         
-        # Ensure maps directory exists
         if not os.path.exists(MAPS_DIRECTORY):
             os.makedirs(MAPS_DIRECTORY)
         
-        # Save map file
         filename = map_data['filename']
         filepath = os.path.join(MAPS_DIRECTORY, filename)
         
-        # Check if file already exists
         if os.path.exists(filepath):
             return jsonify({
                 'success': False,
@@ -120,30 +115,24 @@ def get_maps():
 def play_game():
     """Endpoint to play the game by running the selected algorithm on a map."""
     try:
-        # Extract query parameters
         map_name = request.args.get('map')
         algorithm_name = request.args.get('algorithm')
 
-        # Log received parameters
         app.logger.debug(f"Received map: {map_name}, algorithm: {algorithm_name}")
 
-        # Validate parameters
         if not map_name:
             return jsonify({'error': 'Map parameter is missing'}), 400
         if not algorithm_name:
             return jsonify({'error': 'Algorithm parameter is missing'}), 400
 
-        # Load map and validate map data
         map_data = load_map(map_name)
         if not map_data or 'mapData' not in map_data:
             return jsonify({'error': 'Invalid map data'}), 400
 
-        # Measure algorithm execution time
         start_time = time.time()
         result = run_algorithm(map_data['mapData'], algorithm_name)
         algorithm_time = (time.time() - start_time) * 1000  # Convert to milliseconds
 
-        # Prepare the response
         response = {
             'mapData': map_data['mapData'],
             'path': result.get('path', []),

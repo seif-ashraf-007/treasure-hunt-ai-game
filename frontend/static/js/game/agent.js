@@ -1,16 +1,13 @@
 export function createAgent(startPosition) {
-    // Remove any existing agents first
     const existingAgents = document.querySelectorAll('.agent');
     existingAgents.forEach(agent => agent.remove());
 
     const agentElement = document.createElement('div');
     agentElement.classList.add('agent');
     
-    // Create agent character with multiple parts
     const agentCharacter = document.createElement('div');
     agentCharacter.classList.add('agent-character');
     
-    // Add agent body parts
     const hat = document.createElement('div');
     hat.classList.add('agent-hat');
     
@@ -25,7 +22,6 @@ export function createAgent(startPosition) {
     agentCharacter.appendChild(body);
     agentElement.appendChild(agentCharacter);
 
-    // Create shadow effect
     const agentShadow = document.createElement('div');
     agentShadow.classList.add('agent-shadow');
     agentElement.appendChild(agentShadow);
@@ -52,10 +48,8 @@ export function moveAgent(agent, fromPos, toPos) {
         const toCell = document.querySelector(`.game-cell[data-row='${toPos[0]}'][data-col='${toPos[1]}']`);
         const rect = toCell.getBoundingClientRect();
 
-        // Add moving class for animation
         agent.classList.add('moving');
 
-        // Calculate movement direction
         const dx = toPos[1] - fromPos[1];
         if (dx > 0) {
             agent.classList.add('moving-right');
@@ -63,17 +57,14 @@ export function moveAgent(agent, fromPos, toPos) {
             agent.classList.add('moving-left');
         }
 
-        // Apply smooth movement
         agent.style.transition = 'all 0.5s ease-in-out';
         agent.style.left = `${rect.left}px`;
         agent.style.top = `${rect.top}px`;
 
-        // Add bounce effect
         const character = agent.querySelector('.agent-character');
         character.style.animation = 'bounce 0.5s ease-in-out';
 
         setTimeout(() => {
-            // Remove movement classes
             agent.classList.remove('moving', 'moving-right', 'moving-left');
             character.style.animation = '';
             resolve();
@@ -92,7 +83,6 @@ export function addAgentMessage(message, type = 'thinking') {
     chatBox.appendChild(messageDiv);
     chatBox.scrollTop = chatBox.scrollHeight;
 
-    // Show chat box if hidden
     const chatContainer = document.querySelector('.agent-chat');
     if (chatContainer) {
         chatContainer.style.display = 'flex';

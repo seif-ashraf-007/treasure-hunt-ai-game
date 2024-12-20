@@ -3,12 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const algorithmSelect = document.getElementById("algorithmSelect");
   const startGameBtn = document.getElementById("startGameBtn");
 
-  // Fetch map data from the Flask backend
   fetch("http://127.0.0.1:5000/play/maps")
     .then((response) => response.json())
     .then((data) => {
       if (data.maps) {
-        // Populate the map selection dropdown with the map files
         data.maps.forEach((map) => {
           const option = document.createElement("option");
           option.value = map.filename;
@@ -23,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("Error fetching maps:", error);
     });
 
-  // Handle the "Start Game" button click
   startGameBtn.addEventListener("click", async function () {
     const selectedMap = mapSelect.value;
     const selectedAlgorithm = algorithmSelect.value;
@@ -33,7 +30,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Redirect to the game page with selected map and algorithm as query parameters
     window.location.href = `game.html?map=${selectedMap}&algorithm=${selectedAlgorithm}`;
   });
 });

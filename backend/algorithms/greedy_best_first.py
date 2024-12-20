@@ -23,7 +23,6 @@ def greedy_best_first_algorithm(map_data):
     costs = map_data['costs']
     legend = map_data['legend']
     
-    # Priority queue with heuristic value only (no path cost)
     pq = [(manhattan_distance(start, goal), start, [start], 0)]
     visited = set()
     explored = []
@@ -49,7 +48,6 @@ def greedy_best_first_algorithm(map_data):
                 terrain_type = legend[str(grid[next_pos[0]][next_pos[1]])]
                 step_cost = costs[terrain_type]
                 new_cost = cost + step_cost
-                # Only consider heuristic for priority
                 heappush(pq, (manhattan_distance(next_pos, goal), next_pos, path + [next_pos], new_cost))
     
     return {'path': [], 'explored': explored, 'cost': float('inf')} 

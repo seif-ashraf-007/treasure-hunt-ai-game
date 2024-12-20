@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const mapSize = document.getElementById('map-size');
     const mapDifficulty = document.getElementById('map-difficulty');
     
-    // Fetch available maps
     fetch('http://127.0.0.1:5000/play/maps')
         .then(response => response.json())
         .then(data => {
@@ -20,14 +19,12 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error loading maps:', error));
     
-    // Update map preview when selection changes
     mapSelect.addEventListener('change', function() {
         const selectedMap = this.value;
         if (selectedMap) {
             playButton.style.display = 'inline-block';
             playButton.href = `game.html?map=${selectedMap}`;
             
-            // Load and display map preview
             fetch(`http://127.0.0.1:5000/maps/${selectedMap}`)
                 .then(response => response.json())
                 .then(data => {
@@ -46,15 +43,13 @@ document.addEventListener('DOMContentLoaded', function() {
         mapDisplay.innerHTML = '';
         const grid = mapData.grid;
         
-        // Calculate cell size based on map size
-        const maxSize = 600; // Maximum size of the map display
+        const maxSize = 600;
         const cellSize = Math.min(48, Math.floor(maxSize / mapData.size));
         
-        // Set grid template based on map size
         mapDisplay.style.display = 'grid';
         mapDisplay.style.gridTemplateColumns = `repeat(${mapData.size}, ${cellSize}px)`;
         mapDisplay.style.gridTemplateRows = `repeat(${mapData.size}, ${cellSize}px)`;
-        mapDisplay.style.gap = '2px';
+        mapDisplay.style.gap = '0px';
         mapDisplay.style.width = 'min-content';
         mapDisplay.style.margin = '0 auto';
         
@@ -63,15 +58,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 const cellDiv = document.createElement('div');
                 cellDiv.classList.add('game-cell');
                 
-                // Set cell size dynamically
                 cellDiv.style.width = `${cellSize}px`;
                 cellDiv.style.height = `${cellSize}px`;
                 
-                // Add terrain class based on the grid value
                 const terrainType = mapData.legend[grid[i][j].toString()];
                 cellDiv.classList.add(terrainType);
                 
-                // Add start and goal positions
                 if (i === mapData.start[0] && j === mapData.start[1]) {
                     cellDiv.classList.add('start');
                 }
@@ -85,12 +77,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateMapDetails(mapData) {
-        // Update map size
         if (mapSize) {
             mapSize.textContent = `${mapData.size}x${mapData.size}`;
         }
         
-        // Calculate difficulty based on terrain distribution
         if (mapDifficulty) {
             let difficulty = calculateDifficulty(mapData);
             mapDifficulty.textContent = difficulty;

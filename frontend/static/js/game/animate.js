@@ -25,7 +25,6 @@ export async function animatePath(agent, path, explored, mapData, algorithmTime,
         updateGameStatus('Exploring...');
         updateTimings(algorithmTime, 0);
         
-        // Exploring phase
         for (const pos of explored) {
             if (isCancelled) return;
 
@@ -36,7 +35,6 @@ export async function animatePath(agent, path, explored, mapData, algorithmTime,
                 const terrainType = mapData.legend[terrainValue];
                 const stepCost = mapData.costs[terrainType];
 
-                // Track explored cells
                 if (!exploredTerrainCounts[terrainType]) {
                     exploredTerrainCounts[terrainType] = { count: 0, cost: stepCost };
                 }
@@ -64,7 +62,6 @@ export async function animatePath(agent, path, explored, mapData, algorithmTime,
 
         updateGameStatus('Following optimal path...');
         
-        // Reset agent position
         const startCell = document.querySelector(`.game-cell[data-row='${mapData.start[0]}'][data-col='${mapData.start[1]}']`);
         if (startCell) {
             const rect = startCell.getBoundingClientRect();
@@ -73,7 +70,6 @@ export async function animatePath(agent, path, explored, mapData, algorithmTime,
             await new Promise(resolve => setTimeout(resolve, 300));
         }
         
-        // Optimal path phase
         for (const [row, col] of path) {
             if (isCancelled) return;
 

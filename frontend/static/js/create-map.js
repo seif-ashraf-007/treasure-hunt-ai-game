@@ -10,15 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let goalPlaced = false;
     let currentMapSize = 8;
 
-    // Initialize map grid
     function createGrid(size) {
         mapGrid.innerHTML = '';
         
-        // Calculate cell size based on map size
-        const maxSize = 600; // Maximum size of the map display
+        const maxSize = 600;
         const cellSize = Math.min(48, Math.floor(maxSize / size));
         
-        // Set grid template
         mapGrid.style.display = 'grid';
         mapGrid.style.gridTemplateColumns = `repeat(${size}, ${cellSize}px)`;
         mapGrid.style.gridTemplateRows = `repeat(${size}, ${cellSize}px)`;
@@ -34,11 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 cell.dataset.col = j;
                 cell.dataset.terrain = 'empty';
                 
-                // Set cell size dynamically
                 cell.style.width = `${cellSize}px`;
                 cell.style.height = `${cellSize}px`;
                 
-                // Add drag and drop event listeners
                 cell.addEventListener('dragover', handleDragOver);
                 cell.addEventListener('drop', handleDrop);
                 cell.addEventListener('dragenter', handleDragEnter);
@@ -50,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentMapSize = size;
     }
 
-    // Add event listener for map size changes
     mapSizeSelect.addEventListener('change', () => {
         const newSize = parseInt(mapSizeSelect.value);
         if (confirm('Changing the map size will clear the current map. Continue?')) {
@@ -62,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialize draggable terrain items
     document.querySelectorAll('.terrain-item').forEach(item => {
         item.addEventListener('dragstart', handleDragStart);
         item.addEventListener('dragend', handleDragEnd);
@@ -94,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         const cell = e.target;
         
-        // Make sure we're working with the cell element
         const targetCell = cell.classList.contains('grid-cell') ? cell : cell.closest('.grid-cell');
         if (!targetCell) return;
         
@@ -102,7 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const terrain = e.dataTransfer.getData('text/plain');
         
-        // Handle special cases for start and goal
         if (terrain === 'start') {
             if (startPlaced && targetCell.dataset.terrain !== 'start') {
                 alert('Start position already exists!');
@@ -127,15 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Remove all terrain classes
         targetCell.classList.remove('empty', 'water', 'forest', 'rock', 'start', 'goal');
         
-        // Add new terrain class
         targetCell.classList.add(terrain);
         targetCell.dataset.terrain = terrain;
     }
 
-    // Event Listeners for buttons
     createMapBtn.addEventListener('click', () => {
         createGrid(parseInt(mapSizeSelect.value));
         startPlaced = false;
@@ -162,7 +150,6 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Create map data
         const mapData = {
             name: mapName,
             filename: mapName.toLowerCase().replace(/\s+/g, '_') + '.json', // Create filename from map name
@@ -184,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // Convert visual grid to numeric grid
         const terrainValues = {
             'empty': 0,
             'water': 1,
@@ -200,10 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (terrain === 'start') {
                     mapData.start = [i, j];
-                    row.push(0); // Start position is on empty terrain
+                    row.push(0);
                 } else if (terrain === 'goal') {
                     mapData.goal = [i, j];
-                    row.push(0); // Goal position is on empty terrain
+                    row.push(0);
                 } else {
                     row.push(terrainValues[terrain]);
                 }
@@ -223,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
             if (result.success) {
                 alert('Map saved successfully!');
-                // Redirect to maps page after successful save
                 window.location.href = 'maps.html';
             } else {
                 alert('Error saving map: ' + result.error);
@@ -234,6 +219,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialize the grid with default size
     createGrid(parseInt(mapSizeSelect.value));
 }); 

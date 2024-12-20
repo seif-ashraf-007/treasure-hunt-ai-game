@@ -49,7 +49,6 @@ def best_first_algorithm(map_data):
                 terrain_type = legend[str(grid[next_pos[0]][next_pos[1]])]
                 step_cost = costs[terrain_type]
                 new_cost = cost + step_cost
-                # Combine heuristic and actual cost for priority
                 priority = manhattan_distance(next_pos, goal) + new_cost
                 heappush(pq, (priority, new_cost, next_pos, path + [next_pos]))
     

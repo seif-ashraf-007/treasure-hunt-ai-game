@@ -10,16 +10,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let exploredPathCost = 0;
     let optimalPathCost = 0;
 
-    // Get query parameters from URL
     const urlParams = new URLSearchParams(window.location.search);
     const selectedMap = urlParams.get('map');
     const selectedAlgorithm = urlParams.get('algorithm');
 
-    // Set map and algorithm in the game info section
     document.getElementById('map-name').textContent = selectedMap;
     document.getElementById('algorithm-name').textContent = selectedAlgorithm;
 
-    // Function to render the map
     function renderMap(data) {
         const gameBoard = document.getElementById('game-board');
         if (!gameBoard) return;
@@ -64,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Initial map render without solving
     fetch(`http://127.0.0.1:5000/game?map=${selectedMap}&algorithm=${selectedAlgorithm}`)
         .then(response => response.json())
         .then(data => {
@@ -72,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Error:", data.error);
                 return;
             }
-            // Only render the initial map
             renderMap(data);
         })
         .catch(error => {
@@ -91,7 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updatePathCostsTable(terrain, cost) {
-        // Reset counts if this is the first update
         if (Object.keys(terrainCounts).length === 0) {
             terrainCounts = {};
             document.getElementById('total-path-cost').textContent = '0';
@@ -103,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
         terrainCounts[terrain] = terrainCounts[terrain] || { count: 0, cost: cost };
         terrainCounts[terrain].count++;
         
-        // Update the table
         const tbody = document.getElementById('path-costs-table').getElementsByTagName('tbody')[0];
         tbody.innerHTML = '';
         
@@ -145,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
             agent.style.left = `${rect.left}px`;
             agent.style.top = `${rect.top}px`;
             
-            setTimeout(resolve, 300); // Match transition duration
+            setTimeout(resolve, 300);
         });
     }
 
@@ -159,13 +152,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function animatePath(path, explored, mapData) {
-        // Reset calculations
         currentPathCost = 0;
         terrainCounts = {};
         exploredPathCost = 0;
         optimalPathCost = 0;
         
-        // Ensure explored is an array
         explored = explored || [];
         
         if (!path || path.length === 0) {
@@ -185,7 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
             addAgentMessage(greetings[Math.floor(Math.random() * greetings.length)], "action");
         }
 
-        // Exploring phase
         for (const pos of explored) {
             const [row, col] = pos;
             const cell = document.querySelector(`.game-cell[data-row='${row}'][data-col='${col}']`);
@@ -195,7 +185,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 const terrainType = mapData.legend[terrainValue];
                 const stepCost = mapData.costs[terrainType];
                 
-                // Update explored path cost
                 exploredPathCost += stepCost;
                 document.getElementById('explored-path-cost').textContent = exploredPathCost;
 
@@ -231,13 +220,10 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Stop the timer after exploration phase
         clearInterval(timerInterval);
 
-        // Found path phase
         addAgentMessage(`Exploration complete! Total cost of exploration: ${exploredPathCost}. Now following the optimal path! 🎯`, "action");
         
-        // Follow the optimal path
         for (let i = 0; i < path.length; i++) {
             const pos = path[i];
             const [row, col] = pos;
@@ -276,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function startGame() {
-        // Show the chat box with animation
         const chatBox = document.querySelector('.agent-chat');
         chatBox.style.display = 'block';
         
@@ -286,7 +271,6 @@ document.addEventListener("DOMContentLoaded", function () {
         startGameBtn.textContent = 'Solving...';
         startGameBtn.disabled = true;
 
-        // Reset any existing animations and calculations
         const cells = document.querySelectorAll('.game-cell');
         cells.forEach(cell => {
             cell.classList.remove('path', 'explored');
@@ -294,7 +278,6 @@ document.addEventListener("DOMContentLoaded", function () {
         terrainCounts = {};
         currentPathCost = 0;
 
-        // Show analytics immediately
         document.getElementById('game-analytics').style.display = 'block';
         document.getElementById('game-status').textContent = 'Solving...';
         document.getElementById('game-time').textContent = 'Calculating...';
@@ -334,33 +317,27 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // Start Game button click handler
     startGameBtn.addEventListener("click", function() {
         startGameBtn.disabled = true;
         startGame();
     });
 
-    // Reset Game button click handler
     resetGameBtn.addEventListener("click", function() {
         const cells = document.querySelectorAll('.game-cell');
         cells.forEach(cell => {
             cell.classList.remove('path', 'explored');
         });
         
-        // Hide the chat box
         document.querySelector('.agent-chat').style.display = 'none';
         
-        // Clear the chat messages
         document.getElementById('agent-chat-box').innerHTML = '';
         
-        // Stop the timer
         clearInterval(timerInterval);
         
         document.getElementById('game-analytics').style.display = 'none';
         startGameBtn.textContent = 'Start Game';
         startGameBtn.disabled = false;
         
-        // Reset path costs
         currentPathCost = 0;
         terrainCounts = {};
         document.getElementById('path-length').textContent = '0';

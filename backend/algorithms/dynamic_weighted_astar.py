@@ -21,7 +21,6 @@ def calculate_weight(current, goal, initial_weight=2.5, min_weight=1.0):
     distance = manhattan_distance(current, goal)
     if distance == 0:
         return min_weight
-    # Weight decreases as we get closer to the goal
     weight = initial_weight * (distance / (distance + 1))
     return max(weight, min_weight)
 
@@ -53,7 +52,6 @@ def dynamic_weighted_astar_algorithm(map_data):
         visited.add(current)
         explored.append(current)
         
-        # Calculate dynamic weight based on current position
         weight = calculate_weight(current, goal)
         
         for next_pos in get_neighbors(current, grid):
@@ -64,7 +62,7 @@ def dynamic_weighted_astar_algorithm(map_data):
             if next_pos not in g_scores or tentative_g < g_scores[next_pos]:
                 g_scores[next_pos] = tentative_g
                 h_score = manhattan_distance(next_pos, goal)
-                f_score = tentative_g + weight * h_score  # Apply dynamic weight to heuristic
+                f_score = tentative_g + weight * h_score 
                 heappush(pq, (f_score, tentative_g, next_pos, path + [next_pos]))
     
     return {'path': [], 'explored': explored, 'cost': float('inf')} 

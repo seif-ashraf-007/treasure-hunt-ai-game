@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentAnimation = null;
 
     function resetGame() {
+        // Stop any ongoing animation first
+        if (currentAnimation && currentAnimation.stop) {
+            currentAnimation.stop();
+            currentAnimation = null;
+        }
+
         // Clear visual elements
         document.querySelectorAll('.game-cell').forEach(cell => {
             cell.classList.remove('path', 'explored');
@@ -45,29 +51,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Enable start button
         startGameBtn.disabled = false;
 
-        // Reset map display
-        const mapData = {
-            mapData: {
-                grid: [],
-                start: null,
-                goal: null
-            }
-        };
-
-        // Redirect to play page
-        window.location.href = 'play.html';
+        // Re-render initial map
+        fetch(`http://127.0.0.1:5000/game?map=${selectedMap}&algorithm=${selectedAlgorithm}`)
+            .then(response => response.json())
+            .then(data => renderMap(data))
+            .catch(error => console.error("Error:", error));
     }
 
     async function startGame() {
         try {
-            // Remove existing agent if any
-            if (agent) {
-                agent.remove();
-                agent = null;
-            }
-
-            // Disable start button while game is running
+            // Disable both start and reset buttons while game is running
             startGameBtn.disabled = true;
+            resetGameBtn.disabled = true;
             
             // Show analytics and chat
             gameAnalytics.style.display = 'block';
@@ -94,6 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
             currentAnimation = animatePath(agent, data.path, data.explored, data.mapData, algorithmTime, startTime);
             await currentAnimation;
 
+            // Enable reset button after animation completes
+            resetGameBtn.disabled = false;
+
         } catch (error) {
             console.error("Error:", error);
             alert(`Error: ${error.message}`);
@@ -104,10 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
     startGameBtn.addEventListener('click', startGame);
 
     resetGameBtn.addEventListener('click', () => {
-        // If there's an ongoing animation, stop it
-        if (currentAnimation && currentAnimation.stop) {
-            currentAnimation.stop();
-        }
         resetGame();
     });
 
