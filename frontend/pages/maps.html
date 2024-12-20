@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Preview - Treasure Hunt AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Zeyada&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/map.css">
+</head>
+<body>
+    <header>
+        <h1>The Treasure Hunt AI</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="play.html">Play</a></li>
+                <li><a href="maps.html">Maps</a></li>
+                <li><a href="create-map.html">Create Map</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="map-preview-container">
+            <div class="map-selection">
+                <h2>Select a Map</h2>
+                <select id="map-select">
+                    <option value="">--Choose a Map--</option>
+                </select>
+                <a id="play-button" href="#" class="btn" style="display: none;">Play This Map</a>
+            </div>
+
+            <div class="map-info">
+                <div id="map-display" class="map-display">
+                    <!-- Map grid will be rendered here -->
+                </div>
+                
+                <div class="map-details">
+                    <h3>Map Details</h3>
+                    <div class="terrain-costs">
+                        <h4>Terrain Costs:</h4>
+                        <ul>
+                            <li><div class="terrain empty"></div>Empty: 1 energy</li>
+                            <li><div class="terrain water"></div>Water: 3 energy</li>
+                            <li><div class="terrain forest"></div>Forest: 2 energy</li>
+                            <li><div class="terrain rock"></div>Rock: 4 energy</li>
+                        </ul>
+                    </div>
+                    <div class="map-stats">
+                        <p><strong>Size:</strong> <span id="map-size">-</span></p>
+                        <p><strong>Difficulty:</strong> <span id="map-difficulty">-</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../static/js/map.js"></script>
+</body>
+</html>

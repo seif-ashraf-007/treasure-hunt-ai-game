@@ -1,0 +1,174 @@
+@import url('https://fonts.googleapis.com/css2?family=Lakki+Reddy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Eater&family=Lakki+Reddy&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
+/* Header Styles - matching your theme */
+header {
+    background-color: #F5DEB3;
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #D2691E;
+}
+
+header h1 {
+    margin: 0;
+    font-family: "Lakki Reddy", serif;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    font-size: 1.4rem;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #D2691E;
+    transition: all 0.1s;
+}
+
+nav ul li a:hover {
+    color: #8B4513;
+}
+
+nav li {
+    margin-left: 20px;
+}
+
+/* Map Preview Section */
+.map-preview-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.map-selection {
+    text-align: center;
+    background-color: #F5DEB3;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.map-selection h2 {
+    color: #D2691E;
+    font-family: "Eater", serif;
+}
+
+#map-select {
+    padding: 8px 12px;
+    font-size: 1rem;
+    background-color: #fff3e6;
+    border: 1px solid #d2691e;
+    border-radius: 5px;
+    color: #333;
+    margin-right: 1rem;
+}
+
+.btn {
+    background-color: #D2691E;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: "Lakki Reddy", serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #8B4513;
+}
+
+/* Map Display */
+.map-info {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    background-color: #F5DEB3;
+    padding: 2rem;
+    border-radius: 8px;
+}
+
+#map-display {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-row {
+    display: flex;
+}
+
+.game-cell {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    background-image: url('../assets/grass2.png');
+    background-size: contain;
+}
+
+/* Cell types matching your game */
+.game-cell.empty {
+    background-image: url('../assets/grass2.png');
+}
+
+.game-cell.water {
+    background-image: url('../assets/water.png');
+}
+
+.game-cell.rock {
+    background-image: url('../assets/rocks.png'), url('../assets/grass2.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.game-cell.forest {
+    background-image: url('../assets/tree.png'), url('../assets/grass2.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Map Details */
+.map-details {
+    color: #8B4513;
+    padding: 1rem;
+}
+
+.map-details h3 {
+    font-family: "Eater", serif;
+    color: #D2691E;
+    margin-bottom: 1rem;
+}
+
+.terrain-costs {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.map-stats {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+}

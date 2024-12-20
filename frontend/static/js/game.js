@@ -80,12 +80,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
     function updateRealTimeCounter() {
-        const realTimeElement = document.getElementById('real-time');
-        if (!realTimeElement) return;
+        requestAnimationFrame(() => {
+            const realTimeElement = document.getElementById('real-time');
+            if (!realTimeElement) return;
 
-        const currentTime = performance.now();
-        const realTime = ((currentTime - realStartTime) / 1000).toFixed(2);
-        realTimeElement.textContent = `${realTime} seconds`;
+            const currentTime = performance.now();
+            const realTime = ((currentTime - realStartTime) / 1000).toFixed(2);
+            realTimeElement.textContent = `${realTime} seconds`;
+        });
     }
 
     function updatePathCostsTable(terrain, cost) {
@@ -264,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         const successMessages = [
-            `Mission accomplished! 🎉 Explored cost: ${exploredPathCost}, Optimal path cost: ${optimalPathCost}!`,
+            `Mission accomplished! �� Explored cost: ${exploredPathCost}, Optimal path cost: ${optimalPathCost}!`,
             `Beep boop! Found the treasure! 🌟 We explored paths costing ${exploredPathCost} to find a path costing ${optimalPathCost}!`,
             `Target reached! 💪 Total exploration: ${exploredPathCost}, Best path: ${optimalPathCost}!`,
             `Success! 🏆 Explored ${exploredPathCost} worth of paths to find the optimal ${optimalPathCost} path!`,
