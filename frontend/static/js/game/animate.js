@@ -1,5 +1,12 @@
 import { moveAgent, addAgentMessage } from './agent.js';
 import { updateAnalytics, updateGameStatus, updateTimings } from './analytics.js';
+import messages from './messages.js';
+
+function getRandomMessage(type, replacements) {
+    const messageList = messages[type];
+    const template = messageList[Math.floor(Math.random() * messageList.length)];
+    return template.replace(/\{(\w+)\}/g, (_, key) => replacements[key]);
+}
 
 export async function animatePath(agent, path, explored, mapData, algorithmTime, startTime) {
     let terrainCounts = {};
@@ -20,7 +27,11 @@ export async function animatePath(agent, path, explored, mapData, algorithmTime,
             exploredPathCost += stepCost;
             document.getElementById('explored-path-cost').textContent = exploredPathCost;
 
-            addAgentMessage(`Exploring ${terrainType}, cost: ${stepCost}`);
+            const message = getRandomMessage('exploring', {
+                terrain: terrainType,
+                cost: stepCost
+            });
+            addAgentMessage(message);
             await moveAgent(agent, [row, col], [row, col]);
             cell.classList.add('explored');
 
@@ -64,5 +75,8 @@ export async function animatePath(agent, path, explored, mapData, algorithmTime,
     }
 
     updateGameStatus('Complete');
-    addAgentMessage(`Exploration complete! Path cost: ${optimalPathCost}`, "action");
+    const completionMessage = getRandomMessage('pathFound', {
+        cost: optimalPathCost
+    });
+    addAgentMessage(completionMessage, "action");
 }

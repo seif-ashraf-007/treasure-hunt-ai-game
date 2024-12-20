@@ -22,7 +22,7 @@ export function moveAgent(agent, fromPos, toPos) {
         agent.style.left = `${rect.left}px`;
         agent.style.top = `${rect.top}px`;
 
-        setTimeout(resolve, 300);
+        setTimeout(resolve, 700);
     });
 }
 
