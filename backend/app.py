@@ -16,12 +16,39 @@ CORS(app, resources={
 
 MAPS_DIRECTORY = './maps'
 
+# Ensure the maps directory exists
+if not os.path.exists(MAPS_DIRECTORY):
+    os.makedirs(MAPS_DIRECTORY)
+
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
+
+@app.route('/save_map', methods=['POST'])
+def save_map():
+    try:
+        data = request.get_json()
+        
+        # Validate input data
+        map_name = data.get('name')
+        map_data = data.get('mapData')
+        
+        if not map_name or not map_data:
+            return jsonify({'error': 'Missing map name or map data'}), 400
+        
+        # Create a JSON file path
+        file_path = os.path.join(MAPS_DIRECTORY, f"{map_name}.json")
+        
+        # Save the map to the file
+        with open(file_path, 'w') as f:
+            json.dump({'name': map_name, 'mapData': map_data}, f, indent=4)
+        
+        return jsonify({'message': 'Map saved successfully'}), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/play/maps', methods=['GET'])
 def get_maps():
@@ -70,7 +97,6 @@ def play_game():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
 
 if __name__ == '__main__':
     app.run(debug=True)
