@@ -69,10 +69,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 // Mark start and goal positions
                 if (rowIndex === mapData.start[0] && colIndex === mapData.start[1]) {
-                    cellDiv.innerHTML = 'A';
+                    cellDiv.innerHTML = '';
                     cellDiv.style.color = 'red';
                 } else if (rowIndex === mapData.goal[0] && colIndex === mapData.goal[1]) {
-                    cellDiv.innerHTML = 'B';
+                    cellDiv.innerHTML = '';
                     cellDiv.style.color = 'blue';
                 }
                 
