@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const terrainType = mapData.legend[grid[i][j].toString()];
                 cellDiv.classList.add(terrainType);
                 
+                if (terrainType === 'wall') {
+                    cellDiv.dataset.impassable = 'true';
+                }
+                
                 if (i === mapData.start[0] && j === mapData.start[1]) {
                     cellDiv.classList.add('start');
                 }

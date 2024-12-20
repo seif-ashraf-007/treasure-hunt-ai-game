@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        targetCell.classList.remove('empty', 'water', 'forest', 'rock', 'start', 'goal');
+        targetCell.classList.remove('empty', 'water', 'forest', 'rock', 'wall', 'start', 'goal');
         
         targetCell.classList.add(terrain);
         targetCell.dataset.terrain = terrain;
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const mapData = {
             name: mapName,
-            filename: mapName.toLowerCase().replace(/\s+/g, '_') + '.json', // Create filename from map name
+            filename: mapName.toLowerCase().replace(/\s+/g, '_') + '.json',
             size: currentMapSize,
             grid: [],
             start: null,
@@ -161,13 +161,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 "empty": 1,
                 "water": 3,
                 "forest": 2,
-                "rock": 4
+                "rock": 4,
+                "wall": Infinity
             },
             legend: {
                 "0": "empty",
                 "1": "water",
                 "2": "forest",
-                "3": "rock"
+                "3": "rock",
+                "4": "wall"
             }
         };
 
@@ -175,7 +177,8 @@ document.addEventListener('DOMContentLoaded', () => {
             'empty': 0,
             'water': 1,
             'forest': 2,
-            'rock': 3
+            'rock': 3,
+            'wall': 4
         };
 
         for (let i = 0; i < currentMapSize; i++) {

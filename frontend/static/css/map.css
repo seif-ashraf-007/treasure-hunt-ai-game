@@ -164,6 +164,14 @@ nav li {
     background-repeat: no-repeat;
 }
 
+/* Update wall styling in map display */
+.game-cell.wall {
+    background-image: url('../assets/building_5.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat, repeat;
+    background-position: center, center;
+    background-size: contain, cover;
+}
+
 /* Map Details */
 .map-details {
     color: #8B4513;

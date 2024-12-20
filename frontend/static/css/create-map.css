@@ -130,7 +130,8 @@ nav ul li a:hover {
 }
 
 .terrain.empty {
-    background-image: url('../assets/land_6.png');
+    background-image: url('../assets/land_6.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat;
 }
 
 .terrain.water {
@@ -158,6 +159,44 @@ nav ul li a:hover {
 .terrain.goal {
     background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');    
     background-repeat: no-repeat;
+}
+
+.terrain.wall {
+    background-image: url('../assets/building_5.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat, repeat;
+    background-position: center, center;
+    background-size: contain, cover;
+}
+
+.terrain.eraser {
+    position: relative;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.terrain.eraser::before,
+.terrain.eraser::after {
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 4px;
+    background-color: #D2691E;
+    border-radius: 2px;
+}
+
+.terrain.eraser::before {
+    transform: rotate(45deg);
+}
+
+.terrain.eraser::after {
+    transform: rotate(-45deg);
+}
+
+.terrain.eraser:hover::before,
+.terrain.eraser:hover::after {
+    background-color: #8B4513;
 }
 
 .map-actions {
@@ -247,6 +286,13 @@ button:disabled {
 
 .grid-cell.goal {
     background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');    
+}
+
+.grid-cell.wall {
+    background-image: url('../assets/building_5.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat, repeat;
+    background-position: center, center;
+    background-size: contain, cover;
 }
 
 /* Responsive Design */

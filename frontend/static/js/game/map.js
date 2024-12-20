@@ -30,6 +30,10 @@ export function renderMap(data) {
             const terrainType = data.mapData.legend[grid[i][j].toString()];
             cell.classList.add(terrainType);
             
+            if (terrainType === 'wall') {
+                cell.dataset.impassable = 'true';
+            }
+            
             if (i === data.mapData.start[0] && j === data.mapData.start[1]) {
                 cell.classList.add('start');
             }
