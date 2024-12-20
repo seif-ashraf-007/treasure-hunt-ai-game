@@ -1,8 +1,9 @@
 import os
 import json
+import time
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from map_handler import load_map, run_algorithm  # Ensure these functions are correctly implemented in map_handler.py
+from map_handler import load_map, run_algorithm
 
 app = Flask(__name__)
 
@@ -27,10 +28,75 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     return response
 
+@app.route('/maps/create', methods=['POST'])
+def create_map():
+    """Endpoint to create and save a new map."""
+    try:
+        map_data = request.json
+        
+        # Ensure maps directory exists
+        if not os.path.exists(MAPS_DIRECTORY):
+            os.makedirs(MAPS_DIRECTORY)
+        
+        # Save map file
+        filename = map_data['filename']
+        filepath = os.path.join(MAPS_DIRECTORY, filename)
+        
+        # Check if file already exists
+        if os.path.exists(filepath):
+            return jsonify({
+                'success': False,
+                'error': 'A map with this name already exists'
+            }), 400
+        
+        with open(filepath, 'w') as f:
+            json.dump(map_data, f, indent=4)
+        
+        return jsonify({
+            'success': True,
+            'message': 'Map saved successfully'
+        })
+    
+    except Exception as e:
+        app.logger.error(f"Error creating map: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/maps/<filename>', methods=['GET'])
+def get_map(filename):
+    """Endpoint to get a specific map by filename."""
+    try:
+        filepath = os.path.join(MAPS_DIRECTORY, filename)
+        if not os.path.exists(filepath):
+            return jsonify({
+                'success': False,
+                'error': 'Map not found'
+            }), 404
+            
+        with open(filepath, 'r') as f:
+            map_data = json.load(f)
+            
+        return jsonify({
+            'success': True,
+            'map': map_data
+        })
+        
+    except Exception as e:
+        app.logger.error(f"Error loading map: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 @app.route('/play/maps', methods=['GET'])
 def get_maps():
     """Endpoint to get available map files."""
     try:
+        if not os.path.exists(MAPS_DIRECTORY):
+            os.makedirs(MAPS_DIRECTORY)
+            
         files = os.listdir(MAPS_DIRECTORY)
         maps = []
         for file in files:
@@ -39,9 +105,16 @@ def get_maps():
                     map_data = json.load(f)
                     map_name = map_data.get('name', 'Unknown Map')
                     maps.append({'filename': file, 'name': map_name})
-        return jsonify({'maps': maps})
+        return jsonify({
+            'success': True,
+            'maps': maps
+        })
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        app.logger.error(f"Error getting maps: {str(e)}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
 
 @app.route('/game', methods=['GET'])
 def play_game():
@@ -65,15 +138,18 @@ def play_game():
         if not map_data or 'mapData' not in map_data:
             return jsonify({'error': 'Invalid map data'}), 400
 
-        # Run the selected algorithm
+        # Measure algorithm execution time
+        start_time = time.time()
         result = run_algorithm(map_data['mapData'], algorithm_name)
+        algorithm_time = (time.time() - start_time) * 1000  # Convert to milliseconds
 
         # Prepare the response
         response = {
-            'mapData': map_data['mapData'],  # Include the map data
-            'path': result.get('path', []),  # Include the algorithm result, e.g., the path
-            'explored': result.get('explored', []),  # Include the explored nodes
-            'error': result.get('error', None)  # Include any errors from the algorithm
+            'mapData': map_data['mapData'],
+            'path': result.get('path', []),
+            'explored': result.get('explored', []),
+            'error': result.get('error', None),
+            'algorithmTime': round(algorithm_time, 2)  # Round to 2 decimal places
         }
 
         return jsonify(response)

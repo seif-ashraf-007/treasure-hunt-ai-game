@@ -19,7 +19,7 @@
             </div>
 
             <div class="game-with-analytics">
-                <div class="agent-chat">
+                <div class="agent-chat" style="display: none;">
                     <div class="chat-box" id="agent-chat-box">
                         <!-- Chat messages will appear here -->
                     </div>
@@ -37,35 +37,101 @@
                 </div>
     
                 <div id="game-analytics" class="game-analytics" style="display: none;">
-                    <h3>Game Analytics</h3>
                     <div class="analytics-content">
                         <div class="analytics-section">
-                            <p><strong>Status:</strong> <span id="game-status"></span></p>
-                            <p><strong>Algorithm Processing Time:</strong> <span id="game-time"></span></p>
-                            <p><strong>Total Time Since Start:</strong> <span id="real-time"></span></p>
-                            <p><strong>Explored Path Cost:</strong> <span id="explored-path-cost">0</span></p>
-                            <p><strong>Optimal Path Cost:</strong> <span id="path-length">0</span></p>
-                        </div>
-                        
-                        <div class="path-details">
-                            <h4>Path Details</h4>
-                            <div class="table-container">
-                                <table id="path-costs-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Terrain</th>
-                                            <th>Count</th>
-                                            <th>Cost</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Will be populated dynamically -->
-                                    </tbody>
-                                </table>
+                            <h3>Path Analysis</h3>
+                            <div class="statistics">
+                                <div class="stat-item">
+                                    <label>Status:</label>
+                                    <span id="game-status">-</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>Algorithm Time:</label>
+                                    <span id="game-time">0.00ms</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>Real Time:</label>
+                                    <span id="real-time">0.00s</span>
+                                </div>
                             </div>
-                            <p class="total-cost"><strong>Optimal Path Cost:</strong> <span id="total-path-cost">0</span></p>
                         </div>
+
+                        <div class="analytics-section">
+                            <h3>Path Details</h3>
+                            <table class="path-costs-table" id="path-costs-table">
+                                <thead>
+                                    <tr>
+                                        <th>Terrain</th>
+                                        <th>Count</th>
+                                        <th>Cost</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table content will be dynamically populated -->
+                                </tbody>
+                            </table>
+                            <div class="statistics">
+                                <div class="stat-item">
+                                    <label>Total Path Cost:</label>
+                                    <span id="total-path-cost">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>Path Length:</label>
+                                    <span id="path-length">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label>Explored Cost:</label>
+                                    <span id="explored-path-cost">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-guide">
+                <h2>Map Guide</h2>
+                <div class="guide-grid">
+                    <div class="guide-item">
+                        <div class="guide-cell empty"></div>
+                        <p>Empty Land (Cost: 1)</p>
+                        <span class="guide-desc">Basic traversable terrain</span>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-cell water"></div>
+                        <p>Water (Cost: 3)</p>
+                        <span class="guide-desc">Difficult to cross, higher energy cost</span>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-cell forest"></div>
+                        <p>Forest (Cost: 2)</p>
+                        <span class="guide-desc">Dense vegetation, moderate energy cost</span>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-cell rock"></div>
+                        <p>Mountain (Cost: 4)</p>
+                        <span class="guide-desc">Rocky terrain, highest energy cost</span>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-cell start"></div>
+                        <p>Start Point</p>
+                        <span class="guide-desc">Explorer's starting position</span>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-cell goal"></div>
+                        <p>Treasure</p>
+                        <span class="guide-desc">The goal to reach</span>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-cell explored-example"></div>
+                        <p>Explored Area</p>
+                        <span class="guide-desc">Areas the explorer has searched</span>
+                    </div>
+                    <div class="guide-item">
+                        <div class="guide-cell path-example"></div>
+                        <p>Optimal Path</p>
+                        <span class="guide-desc">Best route to the treasure</span>
                     </div>
                 </div>
             </div>

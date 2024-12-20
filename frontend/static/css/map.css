@@ -98,43 +98,63 @@ nav li {
     background-color: #8B4513;
 }
 
-/* Map Display */
+/* Map Display Container */
 .map-info {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: minmax(auto, 800px) 300px;
     gap: 2rem;
     background-color: #F5DEB3;
     padding: 2rem;
     border-radius: 8px;
+    align-items: start;
 }
 
 #map-display {
     background: white;
     padding: 1rem;
     border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.game-row {
-    display: flex;
-}
-
-.game-cell {
-    width: 64px;
-    height: 64px;
-    display: flex;
+    display: grid;
+    gap: 2px;
+    background-color: #8B4513;
+    padding: 8px;
     justify-content: center;
     align-items: center;
-    font-size: 2rem;
-    background-image: url('../assets/grass2.png');
-    background-size: contain;
+    min-width: min-content;
+    margin: 0 auto;
 }
 
-/* Cell types matching your game */
+/* Game Cell Styles */
+.game-cell {
+    width: 48px;
+    height: 48px;
+    background-color: white;
+    border-radius: 4px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.2s;
+}
+
+/* Terrain Types */
 .game-cell.empty {
     background-image: url('../assets/land_6.png');
+}
+
+.game-cell.water {
+    background-image: url('../assets/lake.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat;
+}
+
+.game-cell.forest {
+    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');    
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.game-cell.rock {
+    background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .game-cell.start {
@@ -145,30 +165,6 @@ nav li {
 .game-cell.goal {
     background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');    
     background-repeat: no-repeat;
-}
-
-.game-cell.wall {
-    background-image: url('../assets/building_5.png'), url('../assets/land_6.png');    
-    background-color: #333;
-    background-repeat: no-repeat;
-}
-
-.game-cell.water {
-    background-image: url('../assets/lake.png'), url('../assets/land_6.png');
-    background-repeat: no-repeat;
-}
-
-.game-cell.rock {
-    background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    
-}
-
-.game-cell.forest {
-    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');    
-    background-repeat: no-repeat;
-    background-position: center;
 }
 
 /* Map Details */
