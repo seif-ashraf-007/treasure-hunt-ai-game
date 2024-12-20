@@ -26,6 +26,11 @@ header h1 {
     font-family: "Lakki Reddy", serif;
 }
 
+header a{
+    text-decoration: none;
+    color: #D2691E;
+}
+
 nav ul {
     list-style-type: none;
     margin: 0;

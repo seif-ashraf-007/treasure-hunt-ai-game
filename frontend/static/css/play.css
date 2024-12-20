@@ -48,6 +48,11 @@ nav li {
     margin-left: 20px;
 }
 
+header a{
+    text-decoration: none;
+    color: #D2691E;
+}
+
 main {
     display: flex;
     flex-direction: column;
