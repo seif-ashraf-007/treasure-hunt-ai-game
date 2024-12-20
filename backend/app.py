@@ -16,9 +16,6 @@ CORS(app, resources={
 
 MAPS_DIRECTORY = './maps'
 
-# Ensure the maps directory exists
-if not os.path.exists(MAPS_DIRECTORY):
-    os.makedirs(MAPS_DIRECTORY)
 
 @app.after_request
 def after_request(response):
@@ -97,6 +94,7 @@ def play_game():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)
