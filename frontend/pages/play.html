@@ -12,8 +12,6 @@
     <nav>
       <ul>
         <li><a href="../index.html">Home</a></li>
-        <li><a href="play.html">Play</a></li>
-        <li><a href="maps.html">Maps</a></li>
         <li><a href="create-map.html">Create Map</a></li>
       </ul>
     </nav>
@@ -52,9 +50,33 @@
       </select>
     </div>
 
-    <button id="startGameBtn" class="btn">Start Game</button>
+    <!-- Add this after your selection controls -->
+    <div class="map-preview-container">
+        <div class="map-info">
+            <div id="game-board">
+                <!-- Map grid will be rendered here -->
+            </div>
+            
+            <div class="map-details">
+                <h3>Map Details</h3>
+                <div class="terrain-costs">
+                    <h4>Terrain Costs:</h4>
+                    <ul>
+                        <li><div class="terrain empty"></div>Empty: 1 energy</li>
+                        <li><div class="terrain water"></div>Water: 3 energy</li>
+                        <li><div class="terrain forest"></div>Forest: 2 energy</li>
+                        <li><div class="terrain rock"></div>Rock: 4 energy</li>
+                        <li><p><strong>Size:</strong> <span id="map-size">-</span></p>
+                        </li>
+                    </ul>
+                </div>
+
+                <button id="startGameBtn" class="btn">Start Game</button>
+            </div>
+        </div>
+    </div>
   </main>
 
-  <script src="../static/js/play.js"></script> <!-- JS File -->
+  <script type="module" src="../static/js/play.js"></script> <!-- JS File -->
 </body>
 </html>

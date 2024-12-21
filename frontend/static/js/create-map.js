@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mapGrid.style.display = 'grid';
         mapGrid.style.gridTemplateColumns = `repeat(${size}, ${cellSize}px)`;
         mapGrid.style.gridTemplateRows = `repeat(${size}, ${cellSize}px)`;
-        mapGrid.style.gap = '2px';
+        mapGrid.style.gap = '';
         mapGrid.style.width = 'min-content';
         mapGrid.style.margin = '0 auto';
         
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
             if (result.success) {
                 alert('Map saved successfully!');
-                window.location.href = 'maps.html';
+                window.location.href = 'play.html';
             } else {
                 alert('Error saving map: ' + result.error);
             }

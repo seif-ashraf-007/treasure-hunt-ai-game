@@ -12,7 +12,7 @@ body {
 
 /* Header Styles */
 header {
-    background-color: #F5DEB3; /* Wheat */
+    background-color: #F5DEB3;
     padding: 20px;
     display: flex;
     justify-content: space-around;
@@ -58,6 +58,8 @@ main {
     flex-direction: column;
     align-items: center;
     padding: 40px;
+    background: linear-gradient(to bottom, #F5DEB3 0%, transparent 100%);
+
 }
 
 /* Hero Section Styles */
@@ -66,7 +68,6 @@ main {
     justify-content: center;
     align-items: center;
     padding: 40px 20px;
-    background-color: #f5deb3;
     margin-bottom: 40px;
     border-radius: 8px;
     width: 100%;
@@ -123,8 +124,148 @@ button {
     font-family: "Lakki Reddy", serif;
     text-transform: uppercase;
     transition: 0.3s ease;
+    display: none;
 }
 
 button:hover {
     background-color: #8B4513;
+}
+
+/* Map Preview Styles */
+.map-preview-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+}
+
+.map-info {
+    display: grid;
+    grid-template-columns: minmax(auto, 800px) 300px;
+    gap: 2rem;
+    background-color: #F5DEB3;
+    padding: 2rem;
+    border-radius: 8px;
+    align-items: start;
+    transition: all 0.3s;
+}
+
+#game-board {
+    padding: 1rem;
+    border-radius: 8px;
+    display: grid;
+    background-color: #8B4513;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    min-width: min-content;
+    margin: 0 auto;
+}
+
+/* Game Cell Styles */
+.game-cell {
+    width: 48px;
+    height: 48px;
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: all 0.2s;
+}
+
+/* Terrain Types */
+.game-cell.empty {
+    background-image: url('../assets/land_6.png');
+}
+
+.game-cell.water {
+    background-image: url('../assets/lake.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat;
+}
+
+.game-cell.forest {
+    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');    
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.game-cell.rock {
+    background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.game-cell.start {
+    background-image: url('../assets/decor_2.png'), url('../assets/road_18.png');   
+    background-repeat: no-repeat;
+}
+
+.game-cell.goal {
+    background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');    
+    background-repeat: no-repeat;
+}
+
+.game-cell.wall {
+    background-image: url('../assets/building_5.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat, repeat;
+    background-position: center, center;
+    background-size: contain, cover;
+}
+
+/* Map Details */
+.map-details {
+    color: #8B4513;
+    padding: 1rem;
+}
+
+.map-details h3 {
+    font-family: "Eater", serif;
+    color: #D2691E;
+    margin-bottom: 1rem;
+}
+
+.terrain-costs {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+/* Terrain preview squares in the legend */
+.terrain {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.terrain.empty {
+    background-image: url('../assets/land_6.png');
+}
+
+.terrain.water {
+    background-image: url('../assets/lake.png'), url('../assets/land_6.png');
+}
+
+.terrain.forest {
+    background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');
+}
+
+.terrain.rock {
+    background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
+}
+
+/* Terrain costs list styling */
+.terrain-costs ul {
+    list-style: none;
+    padding: 0;
+}
+
+.terrain-costs li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
 }

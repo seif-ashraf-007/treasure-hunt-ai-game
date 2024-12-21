@@ -72,12 +72,21 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const response = await fetch(`http://127.0.0.1:5000/game?map=${selectedMap}&algorithm=${selectedAlgorithm}`);
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Server error: ${response.status} ${response.statusText}`);
             }
 
             const data = await response.json();
             if (data.error) {
-                throw new Error(data.error);
+                // More descriptive error handling for algorithm errors
+                const errorMessage = data.error.includes('unsupported operand type')
+                    ? 'Algorithm error: Invalid path calculation (check start/goal positions)'
+                    : data.error;
+                throw new Error(errorMessage);
+            }
+
+            // Validate required data
+            if (!data.path || !data.explored || !data.mapData) {
+                throw new Error('Invalid response data from server');
             }
 
             const algorithmTime = data.algorithmTime || 0;
@@ -93,9 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
             resetGameBtn.disabled = false;
 
         } catch (error) {
-            console.error("Error:", error);
-            alert(`Error: ${error.message}`);
-            resetGame();
+            console.error("Game Error:", error);
+            // Show error in UI instead of alert
+            document.getElementById('game-status').textContent = `Error: ${error.message}`;
+            resetGameBtn.disabled = false;
+            startGameBtn.disabled = false;
         }
     }
 

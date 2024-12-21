@@ -15,6 +15,7 @@ body {
     padding: 0;
     color: #333;
     background-color: #f8f8f8;
+    
 }
 
 /* Header */
@@ -37,9 +38,12 @@ header a {
     text-decoration: none;
 }
 
+main {
+    background: linear-gradient(to bottom, #F5DEB3 0%, transparent 100%);
+}
+
 /* Game Info Section */
 .game-info {
-    background-color: #f5deb3;
     padding: 15px;
     border-radius: 8px;
     text-align: center;
@@ -92,7 +96,7 @@ button:disabled {
 
 /* Analytics Section */
 .game-analytics {
-    background-color: #F5DEB3;
+    background-color: #D2691E;
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -110,7 +114,7 @@ button:disabled {
 }
 
 .analytics-section h3 {
-    color: #D2691E;
+    color: white;
     font-family: "Eater", serif;
     margin-bottom: 1rem;
 }
@@ -127,7 +131,7 @@ button:disabled {
 }
 
 .path-costs-table thead {
-    background-color: #D2691E;
+    background-color: #8B4513;
     color: white;
 }
 
@@ -225,14 +229,20 @@ button:disabled {
 /* Cell types */
 .game-cell.empty {
     background-image: url('../assets/land_6.png');
+    background-size: contain;
+
 }
 
 .game-cell.start {
     background-image: url('../assets/decor_2.png'), url('../assets/road_18.png');
+    background-size: contain;
+
 }
 
 .game-cell.goal {
     background-image: url('../assets/decor_1.png'), url('../assets/road_18.png');
+    background-size: contain;
+
 }
 
 .game-cell.wall {
@@ -243,14 +253,20 @@ button:disabled {
 
 .game-cell.water {
     background-image: url('../assets/lake.png'), url('../assets/land_6.png');
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .game-cell.rock {
     background-image: url('../assets/stones_5.png'), url('../assets/land_6.png');
+    background-size: contain;
+
 }
 
 .game-cell.forest {
     background-image: url('../assets/greenery_9.png'), url('../assets/land_6.png');
+    background-size: contain;
+
 }
 
 .game-cell.path {
@@ -271,7 +287,7 @@ button:disabled {
 
 /* Agent Chat Styles */
 .agent-chat {
-    background-color: #F5DEB3;
+    background-color: #D2691E;
     border-radius: 8px;
     padding: 20px;
     height: 600px;
@@ -292,7 +308,7 @@ button:disabled {
     margin-bottom: 12px;
     padding: 10px 15px;
     border-radius: 15px;
-    background-color: #fff8dc;
+    background-color: #D2691E;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     max-width: 85%;
     position: relative;

@@ -11,7 +11,7 @@ def get_neighbors(pos, grid):
     
     for dr, dc in directions:
         new_r, new_c = r + dr, c + dc
-        if 0 <= new_r < rows and 0 <= new_c < cols and grid[new_r][new_c] != 1:
+        if 0 <= new_r < rows and 0 <= new_c < cols and grid[new_r][new_c] != 4:
             neighbors.append((new_r, new_c))
     
     return neighbors
@@ -46,7 +46,13 @@ def astar_algorithm(map_data):
         
         for next_pos in get_neighbors(current, grid):
             terrain_type = legend[str(grid[next_pos[0]][next_pos[1]])]
+            if terrain_type == "wall":
+                continue
+                
             step_cost = costs[terrain_type]
+            if step_cost is None:
+                continue
+                
             tentative_g = g + step_cost
             
             if next_pos not in g_scores or tentative_g < g_scores[next_pos]:

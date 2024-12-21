@@ -241,10 +241,6 @@ button:disabled {
 
 .map-grid {
     display: grid;
-    gap: 2px;
-    background-color: #8B4513;
-    padding: 2px;
-    border-radius: 4px;
     min-width: min-content;
     margin: 0 auto;
 }
@@ -253,7 +249,6 @@ button:disabled {
     width: 48px;
     height: 48px;
     background-color: white;
-    border-radius: 2px;
     transition: all 0.2s;
     background-size: contain;
     background-repeat: no-repeat;

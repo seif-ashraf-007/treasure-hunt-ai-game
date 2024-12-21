@@ -13,12 +13,13 @@ body {
 
 /* Header Styles */
 header {
-    background-color: #F5DEB3; /* Wheat */
-    padding: 20px;
+    background-color: #F5DEB3;
+    padding: 1.5rem 10%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     color: #D2691E;
+    box-shadow: 0 2px 4px rgba(210, 105, 30, 0.1);
 }
 
 header h1 {
@@ -58,30 +59,63 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
+    background: linear-gradient(to bottom, #F5DEB3 0%, transparent 100%);
+
+}
+
+/* Container for main content */
+.container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* Hero Section Styles */
 .hero {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 60px 20px;
+    padding: 80px 10%;
+    margin-bottom: 0;
 }
 
 .hero-content {
     flex: 1;
-    padding-right: 40px;
+    padding-right: 60px;
+    max-width: 600px;
 }
 
 .hero-content h2 {
     font-family: "Eater", serif;
-    font-size: 3rem;
-    max-width: 70%;
+    font-size: 3.5rem;
+    max-width: 100%;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    color: #8B4513;
 }
 
 .hero-content p {
     font-size: 1.4rem;
-    max-width: 60%;
+    max-width: 80%;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.btn-container {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn, .create-btn {
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .btn {
@@ -101,9 +135,96 @@ main {
     background-color: #8B4513;
 }
 
+.create-btn {
+    text-decoration: none;
+    display: inline-block;
+    color: #D2691E;
+    padding: 12px 24px;
+    border-radius: 4px;
+    border: 1px solid #D2691E;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s ease;
+    font-family: "Lakki Reddy", serif;
+}
+
+.create-btn:hover {
+    background-color: #D2691E;
+    color: white;
+}
+
 .hero-image img {
     max-width: 100%;
     height: auto;
     object-fit: cover; /* Ensures the image covers the space without distortion */
     max-height: 400px; /* Adjust the height limit to fit the design */
+}
+
+/* Features Section */
+.features {
+    width: 100%;
+    padding: 80px 10%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    background-color: white;
+}
+
+.feature-card {
+    padding: 2rem;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h3 {
+    font-family: "Lakki Reddy", serif;
+    color: #D2691E;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 968px) {
+    header {
+        padding: 1.5rem 5%;
+    }
+    
+    .hero {
+        padding: 40px 5%;
+    }
+    
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    .hero-content {
+        padding-right: 0;
+        margin-bottom: 40px;
+    }
+
+    .hero-content h2,
+    .hero-content p {
+        max-width: 100%;
+    }
+
+    .btn-container {
+        justify-content: center;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
 }
