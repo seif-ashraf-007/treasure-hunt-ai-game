@@ -8,7 +8,9 @@ def get_neighbors(pos, grid):
     
     for dr, dc in directions:
         new_r, new_c = r + dr, c + dc
-        if 0 <= new_r < rows and 0 <= new_c < cols and grid[new_r][new_c] != 1:  # 1 is wall
+        if (0 <= new_r < rows and 
+            0 <= new_c < cols and 
+            grid[new_r][new_c] != 4):  # 4 represents a wall
             neighbors.append((new_r, new_c))
     
     return neighbors

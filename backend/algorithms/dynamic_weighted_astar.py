@@ -11,7 +11,7 @@ def get_neighbors(pos, grid):
     
     for dr, dc in directions:
         new_r, new_c = r + dr, c + dc
-        if 0 <= new_r < rows and 0 <= new_c < cols and grid[new_r][new_c] != 1:
+        if 0 <= new_r < rows and 0 <= new_c < cols and grid[new_r][new_c] != 4:
             neighbors.append((new_r, new_c))
     
     return neighbors

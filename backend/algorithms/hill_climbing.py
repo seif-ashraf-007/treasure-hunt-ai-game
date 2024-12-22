@@ -1,4 +1,4 @@
-def get_neighbors(pos, grid):
+def get_neighbors(pos, grid, costs, legend):
     rows, cols = len(grid), len(grid[0])
     r, c = pos
     directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
@@ -6,8 +6,10 @@ def get_neighbors(pos, grid):
     
     for dr, dc in directions:
         new_r, new_c = r + dr, c + dc
-        if 0 <= new_r < rows and 0 <= new_c < cols and grid[new_r][new_c] != 1:
-            neighbors.append((new_r, new_c))
+        if 0 <= new_r < rows and 0 <= new_c < cols:
+            terrain_type = legend[str(grid[new_r][new_c])]
+            if grid[new_r][new_c] != 4:
+                neighbors.append((new_r, new_c))
     
     return neighbors
 
@@ -27,7 +29,7 @@ def hill_climbing_algorithm(map_data):
     total_cost = 0
     
     while current != goal:
-        neighbors = get_neighbors(current, grid)
+        neighbors = get_neighbors(current, grid, costs, legend)
         if not neighbors:
             break
             
