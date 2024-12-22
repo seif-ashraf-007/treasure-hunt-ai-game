@@ -247,7 +247,7 @@ button:disabled {
 
 .game-cell.wall {
     background-image: url('../assets/building_5.png'), url('../assets/land_6.png');    
-    background-color: #333;
+     background-size: contain;
     background-repeat: no-repeat;
 }
 
@@ -1089,4 +1089,10 @@ button:disabled {
 
 .path-costs-table {
     min-width: 300px;
+}
+
+.guide-cell.wall {
+    background-image: url('../assets/building_5.png'), url('../assets/land_6.png');
+    background-size: contain, cover;
+    background-repeat: no-repeat;
 }
